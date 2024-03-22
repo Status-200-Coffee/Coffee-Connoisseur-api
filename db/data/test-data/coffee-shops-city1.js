@@ -1,5 +1,5 @@
 [
-    {
+    {   _id: 1,
         name: "shop1",
         longitude: 0,
         latitude: 0,

@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "seed": "node ./db/seeds/seed.js",
+    "seed-test": "node ./db/seeds/run-seed-test.js",
+    "seed-dev": "node ./db/seeds/run-seed-dev.js",
     "start": "node app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "keywords": [],
   "author": "",

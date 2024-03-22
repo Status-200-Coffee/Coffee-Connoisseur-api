@@ -1,8 +1,4 @@
 const { client } = require("../connection");
-const {
-  coffeeShopsCity1,
-  coffeeShopsCity2,
-} = require("../data/test-data/index");
 
 async function seedDb(
   coffeeShopsCity1Data,
@@ -39,4 +35,4 @@ async function seedDb(
   }
 }
 
-seedDb(coffeeShopsCity1, "city1", coffeeShopsCity2, "city2");
+module.exports = seedDb;

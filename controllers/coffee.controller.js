@@ -1,5 +1,4 @@
-
-const { findShopsByCity, findShopById } = require("../models/coffee.model");
+const { findShopsByCity, findShopById, updateShopById } = require("../models/coffee.model");
 
 exports.getShopsByCity = async (ctx, next) => {
   const { city } = ctx.params;
@@ -12,11 +11,21 @@ exports.getShopsByCity = async (ctx, next) => {
   }
 };
 
-
 exports.getShopById = async (ctx, next) => {
   const { city, shop_id } = ctx.params;
   try {
     const shop = await findShopById(city, +shop_id);
+    ctx.body = { shop };
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.patchShopById = async (ctx, next) => {
+  const { city, shop_id } = ctx.params;
+  const { rating, newPhoto } = ctx.request.body;
+  try {
+    const shop = await updateShopById(city, +shop_id, rating, newPhoto);
     ctx.body = { shop };
   } catch (error) {
     next(error);

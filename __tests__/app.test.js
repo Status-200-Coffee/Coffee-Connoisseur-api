@@ -16,7 +16,7 @@ afterEach(async () => {
 describe("GET /shops/:city", () => {
     test("responds with array of shops from specified city", async () => {
         const response = await request(app.callback()).get("/api/shops/city1");
-        const shops = response.body;
+        const {shops }= response.body;
         expect(response.status).toBe(200);
         expect(shops.length).toBe(6)
         });

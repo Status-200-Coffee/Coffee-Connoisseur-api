@@ -5,7 +5,7 @@ exports.getShopsByCity = async (ctx, next) => {
   console.log(city)
   try {
     const shops = await findShopsByCity(city);
-    ctx.body = shops
+    ctx.body = {shops}
   } catch (error) {
     next(error);
   }

@@ -1,10 +1,13 @@
 const { client } = require("../db/connection");
+
 const { haversineDistanceBetweenPointsInKm } = require("../utils");
 
-exports.findShopsByCity = async (city, filters) => {
+xports.findShopsByCity = async (city, filters, sortBy, orderBy) => {
+
   try {
     await client.connect();
     const query = { city }; 
+
     if (filters) {
       if (filters.dogFriendly) {
         query.dogFriendly = true;
@@ -16,11 +19,18 @@ exports.findShopsByCity = async (city, filters) => {
         query.hasSeating = true;
       }
     }
+    let sortOption = { rating: -1 }; // Default sort by rating in descending order - we can change this to distance after I push this
+
+    if (sortBy && orderBy) {
+      sortOption = {};
+      sortOption[sortBy] = orderBy === 'asc' ? 1 : -1;
+    }
 
     const result = await client
       .db("coffee-conneisseur-api")
       .collection(`coffee-shops-${city}`)
       .find(query)
+      .sort(sortOption) 
       .toArray();
 
     if (filters.lat && filters.long) {

@@ -3,7 +3,8 @@ const { findShopsByCity, findShopById, updateShopById } = require("../models/cof
 exports.getShopsByCity = async (ctx, next) => {
   const { city } = ctx.params;
 
-  const { dogFriendly, dairyFree, hasSeating, lat, long } = ctx.query;
+  const { dogFriendly, dairyFree, hasSeating, lat, long, sortBy, orderBy } = ctx.query;
+
   
   const filters = {
     dogFriendly: dogFriendly === 'true',
@@ -14,7 +15,7 @@ exports.getShopsByCity = async (ctx, next) => {
   };
 
   try {
-    const shops = await findShopsByCity(city, filters);
+    const shops = await findShopsByCity(city, filters, sortBy, orderBy);
     ctx.body = { shops };
   } catch (error) {
     next(error);

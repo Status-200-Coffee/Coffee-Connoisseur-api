@@ -1,14 +1,27 @@
 const { client } = require("../db/connection");
 
-
-exports.findShopsByCity = async (city) => {
+exports.findShopsByCity = async (city, filters) => {
   try {
     await client.connect();
+    const query = { city }; 
+    if (filters) {
+      if (filters.dogFriendly) {
+        query.dogFriendly = true;
+      }
+      if (filters.dairyFree) {
+        query.dairyFree = true;
+      }
+      if (filters.hasSeating) {
+        query.hasSeating = true;
+      }
+    }
+
     const result = await client
       .db("coffee-conneisseur-api")
       .collection(`coffee-shops-${city}`)
-      .find()
-      .toArray(); 
+      .find(query)
+      .toArray();
+
     if (!result) {
       throw new Error('No shops found');
     } else {
@@ -16,8 +29,10 @@ exports.findShopsByCity = async (city) => {
     }
   } catch (error) {
     console.error("Error finding shops:", error);
-    throw error; 
-  } 
+    throw error;
+  } finally {
+    await client.close();
+  }
 };
 exports.findShopById = async (city, shop_id) => {
   await client.connect();

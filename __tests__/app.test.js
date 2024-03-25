@@ -261,3 +261,14 @@ describe.only("GET /api/cities", () => {
     expect(cities.length).toBe(5);
   })
 });
+
+describe("GET /api/users", () => {
+  test("responds with array of users", async () => {
+    const response = await request(app.callback()).get("/api/users");
+    const { users } = response.body;
+    expect(response.status).toBe(200);
+    expect(Array.isArray(users)).toBe(true);
+    expect(users.length).toBe(4);
+  });
+});
+

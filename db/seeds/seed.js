@@ -5,7 +5,7 @@ async function seedDb(
   city1,
   coffeeShopsCity2Data,
   city2,
-  users,
+  usersData,
   citiesData
 ) {
   try {
@@ -28,6 +28,12 @@ async function seedDb(
       .collection("cities");
     const dropCitiesCollection = await citiesCollection.drop();
 
+      const usersCollection = client
+      .db("coffee-conneisseur-api")
+      .collection(`users`);
+    const dropUsersCollection =
+      await usersCollection.drop();
+
     const seedCoffeeShopsCity1Collection = await client
       .db("coffee-conneisseur-api")
       .collection(`coffee-shops-${city1}`)
@@ -38,10 +44,18 @@ async function seedDb(
       .collection(`coffee-shops-${city2}`)
       .insertMany(coffeeShopsCity2Data);
 
+
     const seedCitiesCollection = await client
       .db("coffee-conneisseur-api")
       .collection("cities")
       .insertMany(citiesData);
+
+      const seedUsersCollection = await client
+      .db("coffee-conneisseur-api")
+      .collection(`users`)
+      .insertMany(usersData);
+
+
   } catch (err) {
     console.log(err.stack);
   }

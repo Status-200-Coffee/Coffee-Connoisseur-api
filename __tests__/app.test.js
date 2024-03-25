@@ -103,9 +103,9 @@ describe("Get/api/shops/:city filters",()=>{
       expect(shop).toHaveProperty("distance")
     })
   })
-  test("responds with array of shops sorted by distance ascending with passed lat & long query values", async () => {
+  test("responds with array of shops sorted by distance ascending with passed lat & long query values with sortBy distance", async () => {
     const response= await request(app.callback())
-      .get("/api/shops/city1?lat=0&long=0");
+      .get("/api/shops/city1?lat=0&long=0&sortBy=distance");
     const { shops } = response.body;
     expect(response.status).toBe(200);
     expect(shops.length).toBe(6) 
@@ -113,14 +113,13 @@ describe("Get/api/shops/:city filters",()=>{
   })
 })
 
-describe("Get /api/shops/:city order by and sort by", () => {
+describe("GET /api/shops/:city order by and sort by", () => {
   test("responds with array of shops sorted by rating, in descending order", async () => {
     const response = await request(app.callback()).get("/api/shops/city1?sortBy=rating&orderBy=desc");
     const { shops } = response.body;
     expect(response.status).toBe(200);
     expect(shops).toBeSortedBy("rating", { descending: true });
   });
-
   test("responds with array of shops sorted by rating, in ascending order", async () => {
     const response = await request(app.callback()).get("/api/shops/city1?sortBy=rating&orderBy=asc");
     const { shops } = response.body;
@@ -134,6 +133,7 @@ describe("Get /api/shops/:city order by and sort by", () => {
     expect(shops).toBeSortedBy("totalRatings", { ascending: true });
   })
 })
+
 describe("GET /api/shops/:city/:shop_id", () => {
   test("Status:200 responds with the shop object relating to the correct shop_id", async () => {
     const response = await request(app.callback()).get("/api/shops/city1/3");

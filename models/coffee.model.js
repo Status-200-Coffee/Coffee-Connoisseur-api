@@ -3,10 +3,9 @@ const { client } = require("../db/connection");
 const { haversineDistanceBetweenPointsInKm } = require("../utils");
 
 exports.findShopsByCity = async (city, filters, sortBy, orderBy) => {
-
   try {
     await client.connect();
-    const query = { city }; 
+    const query = { city };
 
     if (filters) {
       if (filters.dogFriendly) {
@@ -19,38 +18,57 @@ exports.findShopsByCity = async (city, filters, sortBy, orderBy) => {
         query.hasSeating = true;
       }
     }
-    let sortOption = { rating: -1 }; // Default sort by rating in descending order - we can change this to distance after I push this
+
+    let sortOption = {};
 
     if (sortBy && orderBy) {
-      sortOption = {};
-      sortOption[sortBy] = orderBy === 'asc' ? 1 : -1;
+      sortOption[sortBy] = orderBy === "asc" ? 1 : -1;
     }
 
     const result = await client
       .db("coffee-conneisseur-api")
       .collection(`coffee-shops-${city}`)
       .find(query)
-      .sort(sortOption) 
+      .sort(sortOption)
       .toArray();
 
     if (filters.lat && filters.long) {
       const resultWithDistanceProperty = result.map((shop) => {
-        shop.distance = haversineDistanceBetweenPointsInKm(filters.lat, filters.long, shop.latitude, shop.longitude)
-        return shop
-      })
-      if (sortBy === "distance") {
-        if (orderBy === 'desc') {
-          const sortedResult = resultWithDistanceProperty.sort((shop1, shop2) => (shop1.distance < shop2.distance) ? 1 : (shop1.distance > shop2.distance) ? -1 : 0) 
-          return sortedResult
+        shop.distance = haversineDistanceBetweenPointsInKm(
+          filters.lat,
+          filters.long,
+          shop.latitude,
+          shop.longitude
+        );
+        return shop;
+      });
+      if (sortBy === "distance" || !sortBy) {
+        if (orderBy === "desc") {
+          const resultSortedByDistance = resultWithDistanceProperty.sort(
+            (shop1, shop2) =>
+              shop1.distance < shop2.distance
+                ? 1
+                : shop1.distance > shop2.distance
+                ? -1
+                : 0
+          );
+          return resultSortedByDistance;
         }
-        const sortedResult = resultWithDistanceProperty.sort((shop1, shop2) => (shop1.distance > shop2.distance) ? 1 : (shop1.distance < shop2.distance) ? -1 : 0) 
-          return sortedResult
+        const resultSortedByDistance = resultWithDistanceProperty.sort(
+          (shop1, shop2) =>
+            shop1.distance > shop2.distance
+              ? 1
+              : shop1.distance < shop2.distance
+              ? -1
+              : 0
+        );
+        return resultSortedByDistance;
       }
-      return resultWithDistanceProperty
+      return resultWithDistanceProperty;
     }
 
     if (!result) {
-      throw new Error('No shops found');
+      throw new Error("No shops found");
     } else {
       return result;
     }
@@ -81,7 +99,6 @@ exports.updateShopById = async (
   newRating = null,
   newPhoto = null
 ) => {
-
   if (!newRating && !newPhoto) {
     throw new Error();
   }

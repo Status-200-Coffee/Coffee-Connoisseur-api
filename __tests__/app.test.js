@@ -132,6 +132,12 @@ describe("GET /api/shops/:city order by and sort by", () => {
     expect(response.status).toBe(200);
     expect(shops).toBeSortedBy("totalRatings", { ascending: true });
   })
+  test("sorts by distance ascending as default when no sortBy queries passed", async () => {
+    const response = await request(app.callback()).get("/api/shops/city1?lat=0&long=0");
+    const { shops } = response.body;
+    expect(response.status).toBe(200);
+    expect(shops).toBeSortedBy("distance", { ascending: true });
+  })
 })
 
 describe("GET /api/shops/:city/:shop_id", () => {

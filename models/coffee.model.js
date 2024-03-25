@@ -12,3 +12,56 @@ exports.findShopById = async (city, shop_id) => {
     return result;
   }
 };
+
+exports.updateShopById = async (
+  city,
+  shop_id,
+  newRating = null,
+  newPhoto = null
+) => {
+
+  if (!newRating && !newPhoto) {
+    throw new Error();
+  }
+  await client.connect();
+
+  const shop = await client
+    .db("coffee-conneisseur-api")
+    .collection(`coffee-shops-${city}`)
+    .findOne({ _id: shop_id });
+
+  if (newRating) {
+    const currRating = +shop.rating;
+    const currTotalRatings = +shop.totalRatings;
+    const updateTotalRatings = currTotalRatings + 1;
+    const updateRating = (
+      (currRating * currTotalRatings + +newRating) /
+      updateTotalRatings
+    ).toFixed(1);
+
+    const updateShop = await client
+      .db("coffee-conneisseur-api")
+      .collection(`coffee-shops-${city}`)
+      .updateOne(
+        { _id: shop_id },
+        { $set: { totalRatings: updateTotalRatings, rating: updateRating } }
+      );
+
+    shop.rating = +updateRating;
+    shop.totalRatings = +updateTotalRatings;
+  }
+
+  if (newPhoto) {
+    const photos = shop.userImages;
+    photos.push(newPhoto);
+
+    const updateShop = await client
+      .db("coffee-conneisseur-api")
+      .collection(`coffee-shops-${city}`)
+      .updateOne({ _id: shop_id }, { $set: { userImages: photos } });
+
+    shop.userImages = photos;
+  }
+
+  return shop;
+};

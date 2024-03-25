@@ -5,13 +5,14 @@ const seedDb = require("../db/seeds/seed");
 const {
   coffeeShopsCity1,
   coffeeShopsCity2,
+  users
 } = require("../db/data/test-data/index");
 
 const { toBeSorted, toBeSortedBy } = require("jest-sorted");
 require("jest-sorted");
 
  
-beforeEach(() => seedDb(coffeeShopsCity1, "city1", coffeeShopsCity2, "city2"))
+beforeEach(() => seedDb(coffeeShopsCity1, "city1", coffeeShopsCity2, "city2", users))
 afterEach(async () => {
   await client.close();
 });
@@ -221,3 +222,12 @@ describe("PATCH /api/shops/:city/:shop_id", () => {
   });
 });
 
+describe("GET /api/users", () => {
+  test("responds with array of users", async () => {
+    const response = await request(app.callback()).get("/api/users");
+    const { users } = response.body;
+    expect(response.status).toBe(200);
+    expect(Array.isArray(users)).toBe(true);
+    expect(users.length).toBe(4);
+  });
+});

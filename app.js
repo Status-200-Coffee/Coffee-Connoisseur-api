@@ -15,7 +15,9 @@ router.get("/", (ctx) => {
 });
 
 router.get("/api/shops/:city/:shop_id", getShopById);
+
 router.patch("/api/shops/:city/:shop_id", patchShopById)
+
 
 router.get("/api/shops/:city", getShopsByCity);
 
@@ -23,6 +25,7 @@ router.use((err, ctx, next) => {
   ctx.status = err.response.status;
   ctx.body = err.response.message;
 });
+
 
 app.listen(9090, function () {
   console.log("Server running on http://localhost:9090");

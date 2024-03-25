@@ -131,7 +131,6 @@ describe("Get /api/shops/:city order by and sort by", () => {
     const response = await request(app.callback()).get("/api/shops/city1?sortBy=totalRatings&orderBy=asc");
     const { shops } = response.body;
     expect(response.status).toBe(200);
-    console.log(shops)
     expect(shops).toBeSortedBy("totalRatings", { ascending: true });
   })
 })

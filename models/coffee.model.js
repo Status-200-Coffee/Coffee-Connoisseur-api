@@ -2,7 +2,7 @@ const { client } = require("../db/connection");
 
 const { haversineDistanceBetweenPointsInKm } = require("../utils");
 
-xports.findShopsByCity = async (city, filters, sortBy, orderBy) => {
+exports.findShopsByCity = async (city, filters, sortBy, orderBy) => {
 
   try {
     await client.connect();

@@ -40,3 +40,52 @@ describe("GET /api/shops/:city/:shop_id", () => {
     expect(response.text).toBe("Not Found");
   });
 });
+
+describe("PATCH /api/shops/:city/:shop_id", () => {
+  test("Status:200 responds with the shop object with updated rating when a star review is given", async () => {
+    const update = { rating: 5 };
+    const response = await request(app.callback())
+      .patch("/api/shops/city1/2")
+      .send(update);
+    const { shop } = response.body;
+    expect(response.status).toBe(200);
+    expect(shop.totalRatings).toBe(4);
+    expect(shop.rating).toBe(4.3);
+  });
+  test("Status:200 responds with the shop object updated with a new photo when an additonal user photo is added", async () => {
+    const update = { newPhoto: "testUrl" };
+    const response = await request(app.callback())
+      .patch("/api/shops/city1/5")
+      .send(update);
+    const { shop } = response.body;
+    expect(response.status).toBe(200);
+    expect(shop.userImages.length).toBe(4);
+    expect(shop.userImages.includes("testUrl")).toBe(true);
+  });
+  test("Status:200 can deal with various data types", async () => {
+    const update = { rating: "3" };
+    const response = await request(app.callback())
+      .patch("/api/shops/city1/1")
+      .send(update);
+    const { shop } = response.body;
+    expect(response.status).toBe(200);
+    expect(shop.totalRatings).toBe(11);
+    expect(shop.rating).toBe(4.4);
+  });
+  test("Status:404 returns an error when body is malformed/missing properties", async () => {
+    const update = {};
+    const response = await request(app.callback())
+      .patch("/api/shops/city1/2")
+      .send(update);
+    expect(response.status).toBe(404);
+    expect(response.text).toBe("Not Found");
+  });
+  test("Status:404 returns an error when body is valid but shop does not exist", async () => {
+    const update = { rating: 5 };
+    const response = await request(app.callback())
+      .patch("/api/shops/city1/2000")
+      .send(update);
+    expect(response.status).toBe(404);
+    expect(response.text).toBe("Not Found");
+  });
+});

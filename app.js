@@ -1,6 +1,6 @@
 const Koa = require("koa");
 const Router = require("koa-router");
-const { getShopById, patchShopById } = require("./controllers/coffee.controller");
+const { getShopsByCity, getShopById, patchShopById } = require("./controllers/coffee.controller");
 const bodyParser = require('koa-bodyparser')
 
 const app = new Koa();
@@ -22,8 +22,18 @@ router.use((err, ctx, next) => {
   ctx.body = err.response.message;
 });
 
+router.get("/api/shops/:city", getShopsByCity);
+
+router.use((err, ctx, next) => {
+  ctx.status = err.response.status;
+  ctx.body = err.response.message;
+});
+
 app.listen(9090, function () {
   console.log("Server running on http://localhost:9090");
 });
 
-module.exports = app;
+module.exports = app
+
+
+

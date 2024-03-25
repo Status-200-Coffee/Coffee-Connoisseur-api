@@ -6,8 +6,22 @@ const {
   coffeeShopsCity1,
   coffeeShopsCity2,
 } = require("../db/data/test-data/index");
+ 
+beforeEach(() => seedDb(coffeeShopsCity1, "city1", coffeeShopsCity2, "city20"),1000)
+afterEach(async () => {
+  await client.close();
+});
 
-beforeEach(() => seedDb(coffeeShopsCity1, "city1", coffeeShopsCity2, "city2"));
+describe("GET /shops/:city", () => {
+    test("responds with array of shops from specified city", async () => {
+        const response = await request(app.callback()).get("/api/shops/city1");
+        const {shops }= response.body;
+        expect(response.status).toBe(200);
+        expect(shops.length).toBe(6)
+        });
+      });
+      //add error handling tests
+      //test for error if city doesn't exists
 
 describe("GET /api/shops/:city/:shop_id", () => {
   test("Status:200 responds with the shop object relating to the correct shop_id", async () => {
@@ -89,3 +103,4 @@ describe("PATCH /api/shops/:city/:shop_id", () => {
     expect(response.text).toBe("Not Found");
   });
 });
+

@@ -17,11 +17,6 @@ router.get("/", (ctx) => {
 router.get("/api/shops/:city/:shop_id", getShopById);
 router.patch("/api/shops/:city/:shop_id", patchShopById)
 
-router.use((err, ctx, next) => {
-  ctx.status = err.response.status;
-  ctx.body = err.response.message;
-});
-
 router.get("/api/shops/:city", getShopsByCity);
 
 router.use((err, ctx, next) => {

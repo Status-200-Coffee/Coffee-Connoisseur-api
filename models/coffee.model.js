@@ -1,4 +1,5 @@
 const { client } = require("../db/connection");
+const { haversineDistanceBetweenPointsInKm } = require("../utils");
 
 exports.findShopsByCity = async (city, filters) => {
   try {
@@ -22,6 +23,16 @@ exports.findShopsByCity = async (city, filters) => {
       .find(query)
       .toArray();
 
+    if (filters.lat && filters.long) {
+      const resultWithDistanceProperty = result.map((shop) => {
+        shop.distance = haversineDistanceBetweenPointsInKm(filters.lat, filters.long, shop.latitude, shop.longitude)
+        return shop
+      })
+      const sortedResult = resultWithDistanceProperty.sort((shop1, shop2) => (shop1.distance > shop2.distance) ? 1 : (shop1.distance < shop2.distance) ? -1 : 0)
+
+      return sortedResult
+    }
+
     if (!result) {
       throw new Error('No shops found');
     } else {
@@ -34,6 +45,7 @@ exports.findShopsByCity = async (city, filters) => {
     await client.close();
   }
 };
+
 exports.findShopById = async (city, shop_id) => {
   await client.connect();
   const result = await client

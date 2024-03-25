@@ -1,5 +1,6 @@
 const { client } = require("../db/connection");
 
+
 exports.findShopsByCity = async (city) => {
   try {
     await client.connect();
@@ -17,4 +18,16 @@ exports.findShopsByCity = async (city) => {
     console.error("Error finding shops:", error);
     throw error; 
   } 
+};
+exports.findShopById = async (city, shop_id) => {
+  await client.connect();
+  const result = await client
+    .db("coffee-conneisseur-api")
+    .collection(`coffee-shops-${city}`)
+    .findOne({ _id: shop_id });
+  if (!result) {
+    throw new Error();
+  } else {
+    return result;
+  }
 };

@@ -14,6 +14,7 @@
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.4.5",
+    "jest-sorted": "^1.0.15",
     "koa": "^2.15.2",
     "koa-body-parser": "^1.1.2",
     "koa-bodyparser": "^4.4.1",

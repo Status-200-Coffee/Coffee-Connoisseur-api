@@ -6,13 +6,15 @@ const {
   coffeeShopsCity1,
   coffeeShopsCity2,
 } = require("../db/data/test-data/index");
+const { toBeSorted, toBeSortedBy } = require("jest-sorted");
+
  
 beforeEach(() => seedDb(coffeeShopsCity1, "city1", coffeeShopsCity2, "city2"))
 afterEach(async () => {
   await client.close();
 });
 
-describe("GET /shops/:city", () => {
+describe("GET /api/shops/:city", () => {
     test("responds with array of shops from specified city", async () => {
         const response = await request(app.callback()).get("/api/shops/city1");
         const {shops}= response.body;
@@ -21,7 +23,7 @@ describe("GET /shops/:city", () => {
         });
         //error handling
       });
-describe("Get/shops/:city filters",()=>{
+describe("Get/api/shops/:city filters",()=>{
   test("responds with filtered array of shops based on query :dogFriendly", async () => {
     const response= await request(app.callback())
       .get("/api/shops/city1?dogFriendly=true");
@@ -87,6 +89,28 @@ describe("Get/shops/:city filters",()=>{
       dairyFree: true,
       hasSeating: true,
     }])
+  })
+})
+describe("Get /api/shops/:city order by and sort by", () => {
+  test("responds with array of shops sorted by rating, in descending order", async () => {
+    const response = await request(app.callback()).get("/api/shops/city1?sortBy=rating&orderBy=desc");
+    const { shops } = response.body;
+    expect(response.status).toBe(200);
+    expect(shops).toBeSortedBy("rating", { descending: true });
+  });
+
+  test("responds with array of shops sorted by rating, in ascending order", async () => {
+    const response = await request(app.callback()).get("/api/shops/city1?sortBy=rating&orderBy=asc");
+    const { shops } = response.body;
+    expect(response.status).toBe(200);
+    expect(shops).toBeSortedBy("rating", { ascending: true });
+  });
+  test("sorts by totalRatings", async () => {
+    const response = await request(app.callback()).get("/api/shops/city1?sortBy=totalRatings&orderBy=asc");
+    const { shops } = response.body;
+    expect(response.status).toBe(200);
+    console.log(shops)
+    expect(shops).toBeSortedBy("totalRatings", { ascending: true });
   })
 })
 describe("GET /api/shops/:city/:shop_id", () => {

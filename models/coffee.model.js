@@ -38,9 +38,15 @@ exports.findShopsByCity = async (city, filters, sortBy, orderBy) => {
         shop.distance = haversineDistanceBetweenPointsInKm(filters.lat, filters.long, shop.latitude, shop.longitude)
         return shop
       })
-      const sortedResult = resultWithDistanceProperty.sort((shop1, shop2) => (shop1.distance > shop2.distance) ? 1 : (shop1.distance < shop2.distance) ? -1 : 0)
-
-      return sortedResult
+      if (sortBy === "distance") {
+        if (orderBy === 'desc') {
+          const sortedResult = resultWithDistanceProperty.sort((shop1, shop2) => (shop1.distance < shop2.distance) ? 1 : (shop1.distance > shop2.distance) ? -1 : 0) 
+          return sortedResult
+        }
+        const sortedResult = resultWithDistanceProperty.sort((shop1, shop2) => (shop1.distance > shop2.distance) ? 1 : (shop1.distance < shop2.distance) ? -1 : 0) 
+          return sortedResult
+      }
+      return resultWithDistanceProperty
     }
 
     if (!result) {

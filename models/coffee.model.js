@@ -1,5 +1,9 @@
 const { client } = require("../db/connection");
-exports.findShopsByCity = async (city, filters, sortBy, orderBy) => {
+
+const { haversineDistanceBetweenPointsInKm } = require("../utils");
+
+xports.findShopsByCity = async (city, filters, sortBy, orderBy) => {
+
   try {
     await client.connect();
     const query = { city }; 
@@ -29,6 +33,16 @@ exports.findShopsByCity = async (city, filters, sortBy, orderBy) => {
       .sort(sortOption) 
       .toArray();
 
+    if (filters.lat && filters.long) {
+      const resultWithDistanceProperty = result.map((shop) => {
+        shop.distance = haversineDistanceBetweenPointsInKm(filters.lat, filters.long, shop.latitude, shop.longitude)
+        return shop
+      })
+      const sortedResult = resultWithDistanceProperty.sort((shop1, shop2) => (shop1.distance > shop2.distance) ? 1 : (shop1.distance < shop2.distance) ? -1 : 0)
+
+      return sortedResult
+    }
+
     if (!result) {
       throw new Error('No shops found');
     } else {
@@ -41,6 +55,7 @@ exports.findShopsByCity = async (city, filters, sortBy, orderBy) => {
     await client.close();
   }
 };
+
 exports.findShopById = async (city, shop_id) => {
   await client.connect();
   const result = await client

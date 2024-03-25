@@ -1,6 +1,7 @@
 const Koa = require("koa");
 const Router = require("koa-router");
 const { getShopsByCity, getShopById, patchShopById } = require("./controllers/coffee.controller");
+const {getUsers} = require("./controllers/users.controller")
 const bodyParser = require('koa-bodyparser')
 
 const app = new Koa();
@@ -18,8 +19,9 @@ router.get("/api/shops/:city/:shop_id", getShopById);
 
 router.patch("/api/shops/:city/:shop_id", patchShopById)
 
-
 router.get("/api/shops/:city", getShopsByCity);
+
+router.get("/api/users", getUsers);
 
 router.use((err, ctx, next) => {
   ctx.status = err.response.status;

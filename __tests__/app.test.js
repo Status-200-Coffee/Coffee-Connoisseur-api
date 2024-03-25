@@ -253,13 +253,26 @@ describe("PATCH /api/shops/:city/:shop_id", () => {
   });
 });
 
-describe("GET /api/cities", () => {
+describe.only("GET /api/cities", () => {
   test("Status:200 responds with an array of city objects", async () => {
     const response = await request(app.callback()).get("/api/cities");
     const { cities } = response.body;
     expect(response.status).toBe(200);
     expect(cities.length).toBe(5);
-  })
+  });
+  test.only("Status:200 responds with closest city when passed long and lat queries", async () => {
+    const response = await request(app.callback()).get(
+      "/api/cities?lat=59.9783&long=-1.6178"
+    );
+    const { city } = response.body;
+    expect(response.status).toBe(200);
+    expect(city).toMatchObject({
+      _id: 5,
+      city: "city5",
+      latitude: 58.9783,
+      longitude: -1.6178,
+    });
+  });
 });
 
 describe("GET /api/users", () => {
@@ -271,4 +284,3 @@ describe("GET /api/users", () => {
     expect(users.length).toBe(4);
   });
 });
-

@@ -6,6 +6,7 @@ const {
   coffeeShopsCity1,
   coffeeShopsCity2,
 } = require("../db/data/test-data/index");
+require("jest-sorted");
  
 beforeEach(() => seedDb(coffeeShopsCity1, "city1", coffeeShopsCity2, "city2"))
 afterEach(async () => {
@@ -21,7 +22,8 @@ describe("GET /shops/:city", () => {
         });
         //error handling
       });
-describe("Get/shops/:city filters",()=>{
+
+describe("GET /shops/:city filters",()=>{
   test("responds with filtered array of shops based on query :dogFriendly", async () => {
     const response= await request(app.callback())
       .get("/api/shops/city1?dogFriendly=true");
@@ -42,8 +44,8 @@ describe("Get/shops/:city filters",()=>{
       name: "shop3",
       mainImage: "https://www.barryanddistrictnews.co.uk/resources/images/3329861.jpg?type=mds-article-962",
       userImages: ["https://www.foodandwine.com/thmb/KzfhJG9naqoKK6ubunTvOp1GhiU=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/Partners-Cortado-FT-BLOG0523-7e4f50be961e4a6490fdfa5a34d6e0f5.jpg","https://abdragons.com/product_images/uploaded_images/depositphotos-43334505-m-2015.jpg","https://cdn.apartmenttherapy.info/image/upload/f_auto,q_auto:eco,c_fill,g_center,w_730,h_913/k%2FPhoto%2FRecipes%2F2020-07-How-to-make-affogato-at-home%2FKitchn_HowTo_Affogato_0281"],
-      longitude: 0,
-      latitude: 0,
+      longitude: 3,
+      latitude: 1,
       city: "city1",
       totalRatings: 64,
       rating: 4.9,
@@ -60,7 +62,7 @@ describe("Get/shops/:city filters",()=>{
     expect(hasSeatingShops.every(shop => shop.hasSeating)).toBe(true);
     expect(hasSeatingShops.length).toBe(4)
   });
-  test("responds with filtered array of shops based on multiple queries: DogFriendly hasSeating",async () => {
+  test("responds with filtered array of shops based on multiple queries: DogFriendly hasSeating", async () => {
     const response= await request(app.callback())
       .get("/api/shops/city1?dogFriendly=true&hasSeating=true");
     const { shops: filteredShops } = response.body;
@@ -78,8 +80,8 @@ describe("Get/shops/:city filters",()=>{
       name: "shop3",
       mainImage: "https://www.barryanddistrictnews.co.uk/resources/images/3329861.jpg?type=mds-article-962",
       userImages: ["https://www.foodandwine.com/thmb/KzfhJG9naqoKK6ubunTvOp1GhiU=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/Partners-Cortado-FT-BLOG0523-7e4f50be961e4a6490fdfa5a34d6e0f5.jpg","https://abdragons.com/product_images/uploaded_images/depositphotos-43334505-m-2015.jpg","https://cdn.apartmenttherapy.info/image/upload/f_auto,q_auto:eco,c_fill,g_center,w_730,h_913/k%2FPhoto%2FRecipes%2F2020-07-How-to-make-affogato-at-home%2FKitchn_HowTo_Affogato_0281"],
-      longitude: 0,
-      latitude: 0,
+      longitude: 3,
+      latitude: 1,
       city: "city1",
       totalRatings: 64,
       rating: 4.9,
@@ -88,7 +90,26 @@ describe("Get/shops/:city filters",()=>{
       hasSeating: true,
     }])
   })
+  test("responds with array of shops with distance property when passed lat & long query values", async () => {
+    const response= await request(app.callback())
+      .get("/api/shops/city1?lat=0&long=0");
+    const { shops } = response.body;
+    expect(response.status).toBe(200);
+    expect(shops.length).toBe(6) 
+    shops.forEach((shop) => {
+      expect(shop).toHaveProperty("distance")
+    })
+  })
+  test("responds with array of shops sorted by distance ascending with passed lat & long query values", async () => {
+    const response= await request(app.callback())
+      .get("/api/shops/city1?lat=0&long=0");
+    const { shops } = response.body;
+    expect(response.status).toBe(200);
+    expect(shops.length).toBe(6) 
+    expect(shops).toBeSortedBy("distance")
+  })
 })
+
 describe("GET /api/shops/:city/:shop_id", () => {
   test("Status:200 responds with the shop object relating to the correct shop_id", async () => {
     const response = await request(app.callback()).get("/api/shops/city1/3");
@@ -97,8 +118,8 @@ describe("GET /api/shops/:city/:shop_id", () => {
     expect(shop).toMatchObject({
       _id: 3,
       name: "shop3",
-      longitude: 0,
-      latitude: 0,
+      longitude: 3,
+      latitude: 1,
       city: "city1",
       totalRatings: 64,
       rating: 4.9,
@@ -129,8 +150,8 @@ describe("PATCH /api/shops/:city/:shop_id", () => {
       .send(update);
     const { shop } = response.body;
     expect(response.status).toBe(200);
-    expect(shop.totalRatings).toBe(4);
-    expect(shop.rating).toBe(4.3);
+    expect(shop.totalRatings).toBe(3);
+    expect(shop.rating).toBe(2.3);
   });
   test("Status:200 responds with the shop object updated with a new photo when an additonal user photo is added", async () => {
     const update = { newPhoto: "testUrl" };

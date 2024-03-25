@@ -253,7 +253,7 @@ describe("PATCH /api/shops/:city/:shop_id", () => {
   });
 });
 
-describe.only("GET /api/cities", () => {
+describe("GET /api/cities", () => {
   test("Status:200 responds with an array of city objects", async () => {
     const response = await request(app.callback()).get("/api/cities");
     const { cities } = response.body;

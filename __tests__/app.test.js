@@ -253,14 +253,14 @@ describe("PATCH /api/shops/:city/:shop_id", () => {
   });
 });
 
-describe.only("GET /api/cities", () => {
+describe("GET /api/cities", () => {
   test("Status:200 responds with an array of city objects", async () => {
     const response = await request(app.callback()).get("/api/cities");
     const { cities } = response.body;
     expect(response.status).toBe(200);
     expect(cities.length).toBe(5);
   });
-  test.only("Status:200 responds with closest city when passed long and lat queries", async () => {
+  test("Status:200 responds with closest city when passed long and lat queries", async () => {
     const response = await request(app.callback()).get(
       "/api/cities?lat=59.9783&long=-1.6178"
     );
@@ -282,5 +282,129 @@ describe("GET /api/users", () => {
     expect(response.status).toBe(200);
     expect(Array.isArray(users)).toBe(true);
     expect(users.length).toBe(4);
+  });
+});
+
+describe.only("PATCH /api/users/:username", () => {
+  test("Status:200 responds with updated user object when new photo added", async () => {
+    const update = { newPhoto: "newPhotoUrl" };
+    const response = await request(app.callback())
+      .patch("/api/users/mochamonster")
+      .send(update);
+    const { user } = response.body;
+    expect(response.status).toBe(200);
+    expect(user).toEqual({
+      _id: 4,
+      profilePicture: " imageUrl",
+      username: "mochamonster",
+      email: "scary@coffee.com",
+      coffeeCollected: 5,
+      photosPosted: ["newPhotoUrl", "url", "url", "url", "url", "url", "url"],
+      favouriteShops: [1, 2, 3, 4, 5],
+    });
+  });
+  test("Status:404 returns an error when newPhoto body is not a string", async () => {
+    const update = { newPhoto: 10 };
+    const response = await request(app.callback())
+      .patch("/api/users/mondayafternoonvibes")
+      .send(update);
+    const { user } = response.body;
+    expect(response.status).toBe(404);
+    expect(response.text).toBe("Not Found");
+  });
+  test("Status:200 responds with updated user object when more coffee collected", async () => {
+    const update = { changeCoffee: 1 };
+    const response = await request(app.callback())
+      .patch("/api/users/easter")
+      .send(update);
+    const { user } = response.body;
+    expect(response.status).toBe(200);
+    expect(user).toEqual({
+      _id: 3,
+      profilePicture: " imageUrl",
+      username: "easter",
+      email: "cup@coffee.com",
+      coffeeCollected: 2,
+      photosPosted: ["url"],
+      favouriteShops: [],
+    });
+  });
+  test("Status:200 responds with updated user object when coffee collected reset to 0", async () => {
+    const update = { changeCoffee: -1 };
+    const response = await request(app.callback())
+      .patch("/api/users/crazycappuccino123")
+      .send(update);
+    const { user } = response.body;
+    expect(response.status).toBe(200);
+    expect(user).toEqual({
+      _id: 1,
+      profilePicture: " imageUrl",
+      username: "crazycappuccino123",
+      email: "email@coffee.com",
+      coffeeCollected: 0,
+      photosPosted: ["url", "url"],
+      favouriteShops: [3, 2],
+    });
+  });
+  test("Status:404 returns an error when coffeeCollected value is not 1 or -1", async () => {
+    const update = { coffeeCollected: 10 };
+    const response = await request(app.callback())
+      .patch("/api/users/mondayafternoonvibes")
+      .send(update);
+    const { user } = response.body;
+    expect(response.status).toBe(404);
+    expect(response.text).toBe("Not Found");
+  });
+  test("Status:200 responds with updated user object when shop added to favourites", async () => {
+    const update = { addToFavourites: 5 };
+    const response = await request(app.callback())
+      .patch("/api/users/crazycappuccino123")
+      .send(update);
+    const { user } = response.body;
+    expect(response.status).toBe(200);
+    expect(user).toEqual({
+      _id: 1,
+      profilePicture: " imageUrl",
+      username: "crazycappuccino123",
+      email: "email@coffee.com",
+      coffeeCollected: 9,
+      photosPosted: ["url", "url"],
+      favouriteShops: [5, 3, 2],
+    });
+  });
+  test("Status:200 responds with updated user object when shop removed from favourites", async () => {
+    const update = { removeFromFavourites: 4 };
+    const response = await request(app.callback())
+      .patch("/api/users/mondayafternoonvibes")
+      .send(update);
+    const { user } = response.body;
+    expect(response.status).toBe(200);
+    expect(user).toEqual({
+      _id: 2,
+      profilePicture: " imageUrl",
+      username: "mondayafternoonvibes",
+      email: "monday@coffee.com",
+      coffeeCollected: 0,
+      photosPosted: ["url", "url", "url"],
+      favouriteShops: [1],
+    });
+  });
+  test("Status:404 returns an error when invalid request body received", async () => {
+    const update = { notAKey: 10 };
+    const response = await request(app.callback())
+      .patch("/api/users/mondayafternoonvibes")
+      .send(update);
+    const { user } = response.body;
+    expect(response.status).toBe(404);
+    expect(response.text).toBe("Not Found");
+  });
+  test("Status:404 returns an error when a non-existent user is called", async () => {
+    const update = { coffeeCollected: 1 };
+    const response = await request(app.callback())
+      .patch("/api/users/notauser")
+      .send(update);
+    const { user } = response.body;
+    expect(response.status).toBe(404);
+    expect(response.text).toBe("Not Found");
   });
 });

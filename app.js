@@ -14,6 +14,7 @@ const {
   postUser, 
 } = require("./controllers/users.controller");
 const bodyParser = require("koa-bodyparser");
+const { getEndpoints } = require("./controllers/endpoints.controller");
 
 
 const app = new Koa();
@@ -26,6 +27,8 @@ router.use(bodyParser());
 router.get("/", (ctx) => {
   ctx.body = "app is working";
 });
+
+router.get("/api", getEndpoints)
 
 router.get("/api/shops/:city/:shop_id", getShopById);
 

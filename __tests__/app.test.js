@@ -8,7 +8,6 @@ const {
   users,
   cities,
 } = require("../db/data/test-data/index");
-
 const { toBeSorted, toBeSortedBy } = require("jest-sorted");
 require("jest-sorted");
 
@@ -394,8 +393,8 @@ describe("PATCH /api/users/:username", () => {
       favouriteShops: [3, 2],
     });
   });
-  test("Status:404 returns an error when coffeeCollected value is not 1 or -1", async () => {
-    const update = { coffeeCollected: 10 };
+  test("Status:404 returns an error when changeCoffee value is not 1 or -1", async () => {
+    const update = { changeCoffee: 10 };
     const response = await request(app.callback())
       .patch("/api/users/mondayafternoonvibes")
       .send(update);
@@ -477,6 +476,7 @@ describe("GET /api/users/:username", () => {
     expect(response.body.error).toBe("Failed to find user by username");
   });
 });
+
 describe("POST /api/cities", () => {
   test("It should create a new city", async () => {
     const newCityData = {

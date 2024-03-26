@@ -1,0 +1,211 @@
+{
+  "GET /api": {
+    "description": "serves up a json representation of all the available endpoints of the api",
+    "exampleResponse": {
+      "endpoints": [{}]
+    }
+  },
+  "GET /api/shops/:city": {
+    "description": "serves an array of all shops in the given city",
+    "queries": [
+      "dogFriendly",
+      "dairyFree",
+      "hasSeating",
+      "lat",
+      "long",
+      { "sortBy": ["rating", "distance", "totalRatings"] },
+      { "orderBy": ["asc", "desc"] }
+    ],
+    "exampleResponse": {
+      "shops": [
+        {
+          "_id": 1,
+          "name": "Brewed Bliss Café",
+          "mainImage": "",
+          "userImages": [],
+          "latitude": 54.9693,
+          "longitude": -1.6107,
+          "city": "Newcastle",
+          "totalRatings": 15,
+          "rating": 4.5,
+          "dogFriendly": true,
+          "dairyFree": false,
+          "hasSeating": true,
+          "description": "Where coffee meets perfection, every time."
+        }
+      ]
+    }
+  },
+  "GET /api/shops/:city/:shop_id": {
+    "description": "serves the shop object relating to the shop_id",
+    "exampleResponse": {
+      "shop": {
+        "_id": 2,
+        "name": "Espresso Junction",
+        "mainImage": "",
+        "userImages": [],
+        "latitude": 54.98856,
+        "longitude": -1.59311,
+        "city": "Newcastle",
+        "totalRatings": 18,
+        "rating": 4.9,
+        "dogFriendly": false,
+        "dairyFree": true,
+        "hasSeating": true,
+        "description": "Crafted coffee, pure satisfaction."
+      }
+    }
+  },
+  "PATCH /api/shops/:city/:shop_id": {
+    "description": "serves the updated shop object",
+    "reqBodyFormat": [{ "rating": 5 }, { "newPhoto": "testUrl" }],
+    "exampleResponse": {
+      "shop": {
+        "_id": 2,
+        "name": "Espresso Junction",
+        "mainImage": "",
+        "userImages": [],
+        "latitude": 54.98856,
+        "longitude": -1.59311,
+        "city": "Newcastle",
+        "totalRatings": 18,
+        "rating": 4.9,
+        "dogFriendly": false,
+        "dairyFree": true,
+        "hasSeating": true,
+        "description": "Crafted coffee, pure satisfaction."
+      }
+    }
+  },
+  "GET /api/cities": {
+    "description": "serves an array of all cities",
+    "exampleResponse": {
+      "cities": [
+        {
+          "_id": 1,
+          "city": "Newcastle",
+          "latitude": 54.9783,
+          "longitude": -1.6178
+        },
+        {
+          "_id": 2,
+          "city": "Carlisle",
+          "latitude": 54.8925,
+          "longitude": -2.9329
+        }
+      ]
+    }
+  },
+  "GET /api/cities + lat/long queries": {
+    "description": "serves the closest city to the passed lat and long coordinates",
+    "queries": ["lat", "long"],
+    "exampleResponse": {
+      "cities": [
+        {
+          "_id": 1,
+          "city": "Newcastle",
+          "latitude": 54.9783,
+          "longitude": -1.6178
+        },
+        {
+          "_id": 2,
+          "city": "Carlisle",
+          "latitude": 54.8925,
+          "longitude": -2.9329
+        }
+      ]
+    }
+  },
+  "POST /api/cities": {
+    "description": "serves the new city object",
+    "reqBodyFormat": {
+      "city": "Crewe City",
+      "latitude": 111.456,
+      "longitude": -777.012
+    },
+    "exampleResponse": {
+      "city": {
+        "_id": "6602ebb0ba064e781236f638",
+        "city": "Crewe City",
+        "latitude": 111.456,
+        "longitude": -777.012
+      }
+    }
+  },
+  "GET /api/users": {
+    "description": "serves an array of all users",
+    "exampleResponse": {
+      "users": [
+        {
+          "_id": 1,
+          "profilePicture": "",
+          "username": "crazycappuccino123",
+          "email": "email@coffee.com",
+          "coffeeCollected": 9,
+          "photosPosted": [],
+          "favouriteShops": [3, 2, 8]
+        }
+      ]
+    }
+  },
+  "POST /api/users": {
+    "description": "serves the new user object",
+    "reqBodyFormat": {
+      "username": "newUser",
+      "email": "newUserEmail"
+    },
+    "exampleResponse": {
+      "user": {
+        "_id": "6602ecafba064e781236f639",
+        "username": "newUser",
+        "email": "newUserEmail",
+        "coffeeCollected": 1,
+        "photosPosted": [],
+        "favouriteShops": []
+      }
+    }
+  },
+  "GET /api/users/:username": {
+    "description": "serves the user object relating to the username",
+    "exampleResponse": {
+      "user": {
+        "_id": 3,
+        "profilePicture": "https://media.istockphoto.com/id/1285010832/vector/cute-shiba-inu-dog-with-sunglasses-drinking-bubble-tea-cartoon-vector-illustration.jpg?s=612x612&w=0&k=20&c=foZrohn-uLq-0oukOF0vIYOcq7DldYB97nKUTm1aOA4=",
+        "username": "easter",
+        "email": "cup@coffee.com",
+        "coffeeCollected": 1,
+        "photosPosted": [
+          "https://imgur.com/VcZkC8y.jpeg",
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlopsqGOeuq1UgJCy-dTQCzrBeiCgTW-CT_Q&usqp=CAU",
+          "https://texashillcountryoliveco.com/cdn/shop/articles/is-olive-oil-in-coffee-a-new-trend-worth-trying-158746.jpg?v=1682382832",
+          "https://media-cldnry.s-nbcnews.com/image/upload/t_fit-1500w,f_auto,q_auto:best/rockcms/2023-09/coffee-day-mc-230922-e0fb52.jpg",
+          "https://foolproofliving.com/wp-content/uploads/2019/03/Turkish-Coffee-Recipe-Image-500x500.jpg",
+          "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/macchiato-027-35b22b8.jpg"
+        ],
+        "favouriteShops": [2, 3, 5, 8, 9]
+      }
+    }
+  },
+  "PATCH /api/users/:username": {
+    "description": "serves the updated user object",
+    "reqBodyFormat": [{ "profilePicture": "newProfilePicture" }, { "newPhoto": "newPhotoUrl" }, {"changeCoffee": 1}, { "addToFavourites": 5 }, { "removeFromFavourites": 4 }],
+    "exampleResponse": {
+      "shop": {
+        "_id": 2,
+        "name": "Espresso Junction",
+        "mainImage": "",
+        "userImages": [],
+        "latitude": 54.98856,
+        "longitude": -1.59311,
+        "city": "Newcastle",
+        "totalRatings": 18,
+        "rating": 4.9,
+        "dogFriendly": false,
+        "dairyFree": true,
+        "hasSeating": true,
+        "description": "Crafted coffee, pure satisfaction."
+      }
+    }
+  }
+}
+

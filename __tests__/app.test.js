@@ -453,7 +453,7 @@ describe("PATCH /api/users/:username", () => {
     expect(response.text).toBe("Not Found");
   });
 });
-  
+
 describe("GET /api/users/:username", () => {
   test("responds with the user object by username", async () => {
     const response = await request(app.callback()).get(`/api/users/easter`);
@@ -470,11 +470,13 @@ describe("GET /api/users/:username", () => {
     });
   });
   test("GET /api/users/:username - User Not Found", async () => {
-    const response = await request(app.callback()).get("/api/users/nonexistentuser");
+    const response = await request(app.callback()).get(
+      "/api/users/nonexistentuser"
+    );
     expect(response.status).toBe(404);
     expect(response.body.error).toBe("Failed to find user by username");
   });
-})
+});
 describe("POST /api/cities", () => {
   test("It should create a new city", async () => {
     const newCityData = {
@@ -487,7 +489,6 @@ describe("POST /api/cities", () => {
       .post("/api/cities")
       .send(newCityData)
       .expect(201);
-
     const { city } = response.body;
     expect(city.city).toBe(newCityData.city);
     expect(city.latitude).toBe(newCityData.latitude);
@@ -507,6 +508,7 @@ describe("POST /api/cities", () => {
     expect(response.body.error).toBe("City data is incomplete");
   });
 });
+
 
 describe("POST /api/shops/:city", () => {
   test("It should create a new shop in the specified city", async () => {
@@ -552,3 +554,4 @@ describe("POST /api/shops/:city", () => {
     expect(response.body.error).toBe("Shop data is incomplete");
   })
 })
+

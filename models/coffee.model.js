@@ -9,7 +9,6 @@ if (process.env.NODE_ENV === "test") {
 
 exports.findShopsByCity = async (city, filters, sortBy, orderBy = 'asc') => {
   try {
-    await client.connect();
     const query = { city };
 
     if (filters) {
@@ -80,13 +79,10 @@ exports.findShopsByCity = async (city, filters, sortBy, orderBy = 'asc') => {
   } catch (error) {
     console.error("Error finding shops:", error);
     throw error;
-  } finally {
-    await client.close();
   }
 };
 
 exports.findShopById = async (city, shop_id) => {
-  await client.connect();
   const result = await client
     .db(dbName)
     .collection(`coffee-shops-${city}`)
@@ -107,8 +103,6 @@ exports.updateShopById = async (
   if (!newRating && !newPhoto) {
     throw new Error();
   }
-  await client.connect();
-
   const shop = await client
     .db(dbName)
     .collection(`coffee-shops-${city}`)

@@ -33,7 +33,6 @@ exports.postUser = async (ctx, next) => {
 
 exports.getUserByUsername = async (ctx, next) => {
     const { username } = ctx.params;
-  
     try {
       const user = await findUserByUsername(username);
       ctx.body = {user}; 

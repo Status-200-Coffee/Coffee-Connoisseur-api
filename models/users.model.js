@@ -7,16 +7,12 @@ if (process.env.NODE_ENV === "test") {
 
 exports.findUsers = async () => {
   try {
-    await client.connect();
-
     const result = await client.db(dbName).collection("users").find().toArray();
 
     return result;
   } catch (error) {
     console.error("Error finding users:", error);
     throw error;
-  } finally {
-    await client.close();
   }
 };
 
@@ -24,8 +20,6 @@ exports.insertUser = async (newUser) => {
   if (!newUser.username || !newUser.email) {
     throw new Error();
   }
-  await client.connect();
-
   const insertUser = await client
     .db(dbName)
     .collection("users")
@@ -45,8 +39,6 @@ exports.updateUserByUsername = async (
     if (!newPhoto && !changeCoffee && !addToFavourites && !removeFromFavourites && !profilePicture) {
       throw new Error();
     }
-    await client.connect();
-
     const user = await client
       .db(dbName)
       .collection("users")
@@ -105,8 +97,6 @@ exports.updateUserByUsername = async (
   
   exports.findUserByUsername = async (username) => {
     try {
-      await client.connect();
-
       const user = await client
         .db(dbName)
         .collection("users")
@@ -120,7 +110,5 @@ exports.updateUserByUsername = async (
     } catch (error) {
       console.error("Error finding user by username:", error);
       throw new Error("Failed to find user by username");
-    } finally {
-      await client.close();
     }
   };

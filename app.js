@@ -47,8 +47,4 @@ router.use((err, ctx, next) => {
   ctx.body = err.response.message;
 });
 
-app.listen(9090, function () {
-  console.log("Server running on http://localhost:9090");
-});
-
 module.exports = app;

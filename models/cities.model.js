@@ -9,8 +9,6 @@ if (process.env.NODE_ENV === "test") {
 
 exports.findCities = async (lat, long) => {
   try {
-    await client.connect();
-
     const result = await client
       .db(dbName)
       .collection("cities")
@@ -41,7 +39,5 @@ exports.findCities = async (lat, long) => {
     return result;
   } catch (error) {
     return error;
-  } finally {
-    await client.close();
   }
 };

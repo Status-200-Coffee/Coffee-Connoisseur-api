@@ -15,8 +15,9 @@ require("jest-sorted");
 beforeEach(() =>
   seedDb(coffeeShopsCity1, "city1", coffeeShopsCity2, "city2", users, cities)
 );
-afterEach(async () => {
-  await client.close();
+
+afterAll(() => {
+  return client.close();
 });
 
 describe("GET /api/shops/:city", () => {

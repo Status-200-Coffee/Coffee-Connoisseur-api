@@ -143,3 +143,12 @@ exports.updateShopById = async (
 
   return shop;
 };
+exports.addShopToCity = async (city, shopData) => {
+    const result = await client
+      .db(dbName)
+      .collection(`coffee-shops-${city}`)
+      .insertOne(shopData);
+const _id = result.insertedId
+const shop = await client.db(dbName).collection(`coffee-shops-${city}`).findOne({_id})
+return shop
+}

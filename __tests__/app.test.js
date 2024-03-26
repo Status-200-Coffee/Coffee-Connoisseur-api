@@ -487,7 +487,7 @@ describe("POST /api/cities", () => {
       .post("/api/cities")
       .send(newCityData)
       .expect(201);
-console.log(response.body)
+
     const { city } = response.body;
     expect(city.city).toBe(newCityData.city);
     expect(city.latitude).toBe(newCityData.latitude);
@@ -507,3 +507,48 @@ console.log(response.body)
     expect(response.body.error).toBe("City data is incomplete");
   });
 });
+
+describe("POST /api/shops/:city", () => {
+  test("It should create a new shop in the specified city", async () => {
+    const newShopData = {
+      name: "New Coffee Shop",
+      address: "123 Main St",
+      dogFriendly: "true",
+      dairyFree: "false",
+      hasSeating: "true",
+      lat: "54.12345",
+      long: "-1.98765",
+      rating: "4.5",
+      userImages: "url1,url2,url3",
+    };
+
+    const response = await request(app.callback())
+    .post("/api/shops/city1")
+    .send(newShopData)
+    .expect(201);
+
+    const { shop } = response.body;
+    expect(shop.name).toBe(newShopData.name);
+    expect(shop.address).toBe(newShopData.address);
+    expect(shop.dogFriendly).toBe(true);
+    expect(shop.dairyFree).toBe(false);
+    expect(shop.hasSeating).toBe(true);
+    expect(shop.latitude).toBeCloseTo(parseFloat(newShopData.lat));
+    expect(shop.longitude).toBeCloseTo(parseFloat(newShopData.long));
+    expect(shop.rating).toBeCloseTo(parseFloat(newShopData.rating));
+    expect(shop.userImages).toEqual(newShopData.userImages.split(','));
+  });
+
+  test("It should return 400 if shop data is incomplete", async () => {
+    const incompleteShopData = {
+      name: "Incomplete Coffee Shop",
+    };
+
+    const response = await request(app.callback())
+      .post("/api/shops/city1")  
+      .send(incompleteShopData)
+      .expect(400);
+
+    expect(response.body.error).toBe("Shop data is incomplete");
+  })
+})

@@ -40,17 +40,19 @@ exports.insertUser = async (newUser) => {
 
 exports.updateUserByUsername = async (
     username,
-    { newPhoto, changeCoffee, addToFavourites, removeFromFavourites }
+    { newPhoto, changeCoffee, addToFavourites, removeFromFavourites, profilePicture }
   ) => {
-    if (!newPhoto && !changeCoffee && !addToFavourites && !removeFromFavourites) {
+    if (!newPhoto && !changeCoffee && !addToFavourites && !removeFromFavourites && !profilePicture) {
       throw new Error();
     }
     await client.connect();
+
     const user = await client
       .db(dbName)
       .collection("users")
       .findOne({ username });
     const change = {};
+    
     if (newPhoto) {
       if (typeof newPhoto !== "string") {
         throw new Error();
@@ -60,6 +62,15 @@ exports.updateUserByUsername = async (
       change.photosPosted = photos;
       user.photosPosted = photos;
     }
+
+    if (profilePicture) {
+      if (typeof profilePicture !== "string") {
+        throw new Error();
+      }
+      change.profilePicture = profilePicture;
+      user.profilePicture = profilePicture;
+    }
+
     if (changeCoffee) {
       let coffee = user.coffeeCollected;
       if (+changeCoffee === 1) {
@@ -91,6 +102,7 @@ exports.updateUserByUsername = async (
       .updateOne({ username }, { $set: { change } });
     return user;
   };
+  
   exports.findUserByUsername = async (username) => {
     try {
       await client.connect();

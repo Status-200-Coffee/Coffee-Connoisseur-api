@@ -317,6 +317,23 @@ describe("POST /api/users", () => {
 });
 
 describe("PATCH /api/users/:username", () => {
+  test("Status:200 responds with updated user object when profile picture is added/changed", async () => {
+    const update = { profilePicture: "newProfilePicture" };
+    const response = await request(app.callback())
+      .patch("/api/users/easter")
+      .send(update);
+    const { user } = response.body;
+    expect(response.status).toBe(200);
+    expect(user.profilePicture).toEqual("newProfilePicture");
+  });
+  test("Status:404 returns an error when profilePicture value is not a string", async () => {
+    const update = { profilePicture: 123 };
+    const response = await request(app.callback())
+      .patch("/api/users/mondayafternoonvibes")
+      .send(update);
+    expect(response.status).toBe(404);
+    expect(response.text).toBe("Not Found");
+  });
   test("Status:200 responds with updated user object when new photo added", async () => {
     const update = { newPhoto: "newPhotoUrl" };
     const response = await request(app.callback())

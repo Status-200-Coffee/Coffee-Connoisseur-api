@@ -4,6 +4,7 @@ const {
   getShopsByCity,
   getShopById,
   patchShopById,
+  postShopToCity
 } = require("./controllers/coffee.controller");
 const { getAllCities, postCity } = require("./controllers/cities.controller");
 const {
@@ -31,6 +32,8 @@ router.get("/api/shops/:city/:shop_id", getShopById);
 router.patch("/api/shops/:city/:shop_id", patchShopById);
 
 router.get("/api/shops/:city", getShopsByCity);
+
+router.post("/api/shops/:city", postShopToCity)
 
 router.get("/api/cities", getAllCities);
 

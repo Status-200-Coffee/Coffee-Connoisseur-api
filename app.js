@@ -5,7 +5,7 @@ const {
   getShopById,
   patchShopById,
 } = require("./controllers/coffee.controller");
-const { getAllCities } = require("./controllers/cities.controller");
+const { getAllCities, postCity } = require("./controllers/cities.controller");
 const {
   getUsers,
   getUserByUsername,
@@ -33,6 +33,8 @@ router.patch("/api/shops/:city/:shop_id", patchShopById);
 router.get("/api/shops/:city", getShopsByCity);
 
 router.get("/api/cities", getAllCities);
+
+router.post("/api/cities", postCity);
 
 router.get("/api/users", getUsers);
 

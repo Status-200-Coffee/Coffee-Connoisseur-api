@@ -45,3 +45,12 @@ exports.findCities = async (lat, long) => {
     await client.close();
   }
 };
+exports.addCity = async (cityData) => {
+    const result = await client
+      .db(dbName)
+      .collection("cities")
+      .insertOne(cityData);
+const _id = result.insertedId
+const city = await client.db(dbName).collection("cities").findOne({_id})
+return city
+};

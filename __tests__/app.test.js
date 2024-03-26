@@ -457,3 +457,35 @@ describe("GET /api/users/:username", () => {
     expect(response.body.error).toBe("Failed to find user by username");
   });
 })
+describe("POST /api/cities", () => {
+  test("It should create a new city", async () => {
+    const newCityData = {
+      city: "Crewe City",
+      latitude: 111.456,
+      longitude: -777.012,
+    };
+
+    const response = await request(app.callback())
+      .post("/api/cities")
+      .send(newCityData)
+      .expect(201);
+console.log(response.body)
+    const { city } = response.body;
+    expect(city.city).toBe(newCityData.city);
+    expect(city.latitude).toBe(newCityData.latitude);
+    expect(city.longitude).toBe(newCityData.longitude);
+  });
+
+  test("It should return 400 if city data is incomplete", async () => {
+    const incompleteCityData = {
+      city: "Incomplete City",
+    };
+
+    const response = await request(app.callback())
+      .post("/api/cities")
+      .send(incompleteCityData)
+      .expect(400);
+
+    expect(response.body.error).toBe("City data is incomplete");
+  });
+});

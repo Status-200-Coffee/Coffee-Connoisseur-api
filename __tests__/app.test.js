@@ -29,7 +29,7 @@ describe("GET /api/shops/:city", () => {
   //error handling
 });
 
-describe("Get/api/shops/:city filters", () => {
+describe("GET /api/shops/:city filters", () => {
   test("responds with filtered array of shops based on query :dogFriendly", async () => {
     const response = await request(app.callback()).get(
       "/api/shops/city1?dogFriendly=true"
@@ -283,9 +283,40 @@ describe("GET /api/users", () => {
     expect(Array.isArray(users)).toBe(true);
     expect(users.length).toBe(4);
   });
-
+=======
   //error handling
 });
+
+describe("POST /api/users", () => {
+  test("Status:201 responds with new user object", async () => {
+    const newUser = {
+      username: "newUser",
+      email: "newUserEmail",
+    };
+    const response = await request(app.callback())
+      .post("/api/users")
+      .send(newUser);
+    const { user } = response.body;
+    expect(response.status).toBe(201);
+    expect(user).toMatchObject({
+      username: "newUser",
+      email: "newUserEmail",
+      coffeeCollected: 1,
+      photosPosted: [],
+      favouriteShops: [],
+    });
+    expect(user).toHaveProperty("_id");
+  });
+  test("Status:404 returns an error when username and email keys are missing", async () => {
+    const newUser = { username: "testUser" };
+    const response = await request(app.callback())
+      .post("/api/users")
+      .send(newUser);
+    expect(response.status).toBe(404);
+    expect(response.text).toBe("Not Found");
+  });
+});
+
 describe("PATCH /api/users/:username", () => {
   test("Status:200 responds with updated user object when new photo added", async () => {
     const update = { newPhoto: "newPhotoUrl" };
@@ -405,6 +436,7 @@ describe("PATCH /api/users/:username", () => {
     expect(response.text).toBe("Not Found");
   });
 });
+  
 describe("GET /api/users/:username", () => {
   test("responds with the user object by username", async () => {
     const response = await request(app.callback()).get(`/api/users/easter`);

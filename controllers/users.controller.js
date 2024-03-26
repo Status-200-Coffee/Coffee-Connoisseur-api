@@ -1,6 +1,9 @@
-
-const { findUsers, findUserByUsername,  updateUserByUsername } = require("../models/users.model");
-
+const {
+  findUsers,
+  findUserByUsername,
+  updateUserByUsername,
+  insertUser,
+} = require("../models/users.model");
 
 exports.getUsers = async (ctx, next) => {
   try {
@@ -13,6 +16,20 @@ exports.getUsers = async (ctx, next) => {
   }
 };
 
+
+exports.postUser = async (ctx, next) => {
+  const newUser = ctx.request.body;
+  newUser.coffeeCollected = 1;
+  newUser.photosPosted = [];
+  newUser.favouriteShops = [];
+  try {
+    const user = await insertUser(newUser);
+    ctx.status = 201;
+    ctx.body = { user };
+  } catch (error) {
+    next(error);
+  }
+};
 
 exports.getUserByUsername = async (ctx, next) => {
     const { username } = ctx.params;

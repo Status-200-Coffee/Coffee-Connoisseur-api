@@ -283,7 +283,6 @@ describe("GET /api/users", () => {
     expect(Array.isArray(users)).toBe(true);
     expect(users.length).toBe(4);
   });
-=======
   //error handling
 });
 

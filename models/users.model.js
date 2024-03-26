@@ -108,7 +108,7 @@ exports.updateUserByUsername = async (
       await client.connect();
 
       const user = await client
-        .db("coffee-conneisseur-api")
+        .db(dbName)
         .collection("users")
         .findOne({ username: username });
   

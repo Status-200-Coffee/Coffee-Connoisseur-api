@@ -29,7 +29,7 @@ describe("GET /api/shops/:city", () => {
   //error handling
 });
 
-describe("Get/api/shops/:city filters", () => {
+describe("GET /api/shops/:city filters", () => {
   test("responds with filtered array of shops based on query :dogFriendly", async () => {
     const response = await request(app.callback()).get(
       "/api/shops/city1?dogFriendly=true"
@@ -283,6 +283,8 @@ describe("GET /api/users", () => {
     expect(Array.isArray(users)).toBe(true);
     expect(users.length).toBe(4);
   });
+=======
+  //error handling
 });
 
 describe("POST /api/users", () => {
@@ -434,3 +436,25 @@ describe("PATCH /api/users/:username", () => {
     expect(response.text).toBe("Not Found");
   });
 });
+  
+describe("GET /api/users/:username", () => {
+  test("responds with the user object by username", async () => {
+    const response = await request(app.callback()).get(`/api/users/easter`);
+    const { user } = response.body;
+    expect(response.status).toBe(200);
+    expect(user).toEqual({
+      _id: 3,
+      profilePicture: " imageUrl",
+      username: "easter",
+      email: "cup@coffee.com",
+      coffeeCollected: 1,
+      photosPosted: ["url"],
+      favouriteShops: [],
+    });
+  });
+  test("GET /api/users/:username - User Not Found", async () => {
+    const response = await request(app.callback()).get("/api/users/nonexistentuser");
+    expect(response.status).toBe(404);
+    expect(response.body.error).toBe("Failed to find user by username");
+  });
+})

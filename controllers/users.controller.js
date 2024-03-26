@@ -1,5 +1,6 @@
 const {
   findUsers,
+  findUserByUsername,
   updateUserByUsername,
   insertUser,
 } = require("../models/users.model");
@@ -15,6 +16,7 @@ exports.getUsers = async (ctx, next) => {
   }
 };
 
+
 exports.postUser = async (ctx, next) => {
   const newUser = ctx.request.body;
   newUser.coffeeCollected = 1;
@@ -29,6 +31,19 @@ exports.postUser = async (ctx, next) => {
   }
 };
 
+exports.getUserByUsername = async (ctx, next) => {
+    const { username } = ctx.params;
+  
+    try {
+      const user = await findUserByUsername(username);
+      ctx.body = {user}; 
+    } catch (error) {
+      ctx.status = 404;
+      ctx.body = { error: error.message };
+      return next();
+    }
+  };
+
 exports.patchUserByUsername = async (ctx, next) => {
   const { username } = ctx.params;
   const update = ctx.request.body;
@@ -39,3 +54,4 @@ exports.patchUserByUsername = async (ctx, next) => {
     next(error);
   }
 };
+

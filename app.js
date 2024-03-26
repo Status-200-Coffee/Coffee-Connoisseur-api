@@ -8,10 +8,12 @@ const {
 const { getAllCities } = require("./controllers/cities.controller");
 const {
   getUsers,
+  getUserByUsername,
   patchUserByUsername,
-  postUser,
+  postUser, 
 } = require("./controllers/users.controller");
 const bodyParser = require("koa-bodyparser");
+
 
 const app = new Koa();
 const router = new Router();
@@ -36,7 +38,9 @@ router.get("/api/users", getUsers);
 
 router.post("/api/users", postUser);
 
-router.patch("/api/users/:username", patchUserByUsername);
+router.get("/api/users/:username",getUserByUsername);
+
+router.patch("/api/users/:username", patchUserByUsername)
 
 router.use((err, ctx, next) => {
   ctx.status = err.response.status;

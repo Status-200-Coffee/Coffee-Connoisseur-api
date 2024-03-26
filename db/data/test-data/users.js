@@ -2,8 +2,8 @@ module.exports = [
   {
     _id: 1,
     profilePicture: " imageUrl",
-    Username: "crazycappuccino123",
-    Email: "email@coffee.com",
+    username: "crazycappuccino123",
+    email: "email@coffee.com",
     coffeeCollected: 9,
     photosPosted: ["url", "url"],
     favouriteShops: [3, 2],
@@ -11,8 +11,8 @@ module.exports = [
   {
     _id: 2,
     profilePicture: " imageUrl",
-    Username: "mondayafternoonvibes",
-    Email: "monday@coffee.com",
+    username: "mondayafternoonvibes",
+    email: "monday@coffee.com",
     coffeeCollected: 0,
     photosPosted: ["url", "url", "url"],
     favouriteShops: [1, 4],
@@ -20,8 +20,8 @@ module.exports = [
   {
     _id: 3,
     profilePicture: " imageUrl",
-    Username: "easter",
-    Email: "cup@coffee.com",
+    username: "easter",
+    email: "cup@coffee.com",
     coffeeCollected: 1,
     photosPosted: ["url"],
     favouriteShops: [],
@@ -29,8 +29,8 @@ module.exports = [
   {
     _id: 4,
     profilePicture: " imageUrl",
-    Username: "mochamonster",
-    Email: "scary@coffee.com",
+    username: "mochamonster",
+    email: "scary@coffee.com",
     coffeeCollected: 5,
     photosPosted: ["url", "url", "url", "url", "url", "url"],
     favouriteShops: [1, 2, 3, 4, 5],

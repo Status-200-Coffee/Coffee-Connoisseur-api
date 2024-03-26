@@ -20,6 +20,24 @@ exports.findUsers = async () => {
   }
 };
 
+exports.insertUser = async (newUser) => {
+  if (!newUser.username || !newUser.email) {
+    throw new Error();
+  }
+  await client.connect();
+
+  const insertUser = await client
+    .db(dbName)
+    .collection("users")
+    .insertOne(newUser);
+
+  const _id = insertUser.insertedId;
+
+  const user = await client.db(dbName).collection("users").findOne({ _id });
+
+  return user;
+};
+
 exports.updateUserByUsername = async (
   username,
   { newPhoto, changeCoffee, addToFavourites, removeFromFavourites }

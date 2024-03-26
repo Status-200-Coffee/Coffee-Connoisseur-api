@@ -1,4 +1,6 @@
-const { findUsers, updateUserByUsername } = require("../models/users.model");
+
+const { findUsers, findUserByUsername,  updateUserByUsername } = require("../models/users.model");
+
 
 exports.getUsers = async (ctx, next) => {
   try {
@@ -11,6 +13,20 @@ exports.getUsers = async (ctx, next) => {
   }
 };
 
+
+exports.getUserByUsername = async (ctx, next) => {
+    const { username } = ctx.params;
+  
+    try {
+      const user = await findUserByUsername(username);
+      ctx.body = {user}; 
+    } catch (error) {
+      ctx.status = 404;
+      ctx.body = { error: error.message };
+      return next();
+    }
+  };
+
 exports.patchUserByUsername = async (ctx, next) => {
   const { username } = ctx.params;
   const update = ctx.request.body;
@@ -21,3 +37,4 @@ exports.patchUserByUsername = async (ctx, next) => {
     next(error);
   }
 };
+

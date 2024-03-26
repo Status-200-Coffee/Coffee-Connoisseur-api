@@ -40,6 +40,31 @@ exports.updateUserByUsername = async (
     if (typeof newPhoto !== "string") {
       throw new Error();
     }
+
+  };
+
+  exports.findUserByUsername = async (username) => {
+    try {
+      await client.connect();
+
+      const user = await client
+        .db("coffee-conneisseur-api")
+        .collection("users")
+        .findOne({ username: username });
+  
+      if (!user) {
+        throw new Error("User not found");
+      } else {
+        return user;
+      }
+    } catch (error) {
+      console.error("Error finding user by username:", error);
+      throw new Error("Failed to find user by username");
+    } finally {
+      await client.close();
+    }
+  };
+
     const photos = user.photosPosted;
     photos.unshift(newPhoto);
     change.photosPosted = photos;
@@ -81,3 +106,4 @@ exports.updateUserByUsername = async (
 
   return user;
 };
+

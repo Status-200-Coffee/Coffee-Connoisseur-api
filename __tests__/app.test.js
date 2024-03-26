@@ -283,9 +283,10 @@ describe("GET /api/users", () => {
     expect(Array.isArray(users)).toBe(true);
     expect(users.length).toBe(4);
   });
-});
 
-describe.only("PATCH /api/users/:username", () => {
+  //error handling
+});
+describe("PATCH /api/users/:username", () => {
   test("Status:200 responds with updated user object when new photo added", async () => {
     const update = { newPhoto: "newPhotoUrl" };
     const response = await request(app.callback())
@@ -308,7 +309,6 @@ describe.only("PATCH /api/users/:username", () => {
     const response = await request(app.callback())
       .patch("/api/users/mondayafternoonvibes")
       .send(update);
-    const { user } = response.body;
     expect(response.status).toBe(404);
     expect(response.text).toBe("Not Found");
   });
@@ -351,7 +351,6 @@ describe.only("PATCH /api/users/:username", () => {
     const response = await request(app.callback())
       .patch("/api/users/mondayafternoonvibes")
       .send(update);
-    const { user } = response.body;
     expect(response.status).toBe(404);
     expect(response.text).toBe("Not Found");
   });
@@ -394,7 +393,6 @@ describe.only("PATCH /api/users/:username", () => {
     const response = await request(app.callback())
       .patch("/api/users/mondayafternoonvibes")
       .send(update);
-    const { user } = response.body;
     expect(response.status).toBe(404);
     expect(response.text).toBe("Not Found");
   });
@@ -403,8 +401,28 @@ describe.only("PATCH /api/users/:username", () => {
     const response = await request(app.callback())
       .patch("/api/users/notauser")
       .send(update);
-    const { user } = response.body;
     expect(response.status).toBe(404);
     expect(response.text).toBe("Not Found");
   });
 });
+describe("GET /api/users/:username", () => {
+  test("responds with the user object by username", async () => {
+    const response = await request(app.callback()).get(`/api/users/easter`);
+    const { user } = response.body;
+    expect(response.status).toBe(200);
+    expect(user).toEqual({
+      _id: 3,
+      profilePicture: " imageUrl",
+      username: "easter",
+      email: "cup@coffee.com",
+      coffeeCollected: 1,
+      photosPosted: ["url"],
+      favouriteShops: [],
+    });
+  });
+  test("GET /api/users/:username - User Not Found", async () => {
+    const response = await request(app.callback()).get("/api/users/nonexistentuser");
+    expect(response.status).toBe(404);
+    expect(response.body.error).toBe("Failed to find user by username");
+  });
+})

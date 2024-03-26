@@ -33,86 +33,100 @@ exports.insertUser = async (newUser) => {
 };
 
 exports.updateUserByUsername = async (
-    username,
-    { newPhoto, changeCoffee, addToFavourites, removeFromFavourites, profilePicture }
-  ) => {
-    if (!newPhoto && !changeCoffee && !addToFavourites && !removeFromFavourites && !profilePicture) {
+  username,
+  {
+    newPhoto,
+    changeCoffee,
+    addToFavourites,
+    removeFromFavourites,
+    profilePicture,
+  }
+) => {
+  if (
+    !newPhoto &&
+    !changeCoffee &&
+    !addToFavourites &&
+    !removeFromFavourites &&
+    !profilePicture
+  ) {
+    throw new Error();
+  }
+  const user = await client
+    .db(dbName)
+    .collection("users")
+    .findOne({ username });
+  const change = {};
+
+  if (newPhoto) {
+    if (typeof newPhoto !== "string") {
       throw new Error();
     }
+    const photos = user.photosPosted;
+    photos.unshift(newPhoto);
+    change.photosPosted = photos;
+    user.photosPosted = photos;
+  }
+
+  if (profilePicture) {
+    if (typeof profilePicture !== "string") {
+      throw new Error();
+    }
+    change.profilePicture = profilePicture;
+    user.profilePicture = profilePicture;
+  }
+
+  if (changeCoffee) {
+    let coffee = user.coffeeCollected;
+    if (+changeCoffee === 1) {
+      coffee++;
+    }
+    if (+changeCoffee === -1) {
+      coffee = 0;
+    }
+    if (+changeCoffee !== 1 && +changeCoffee !== -1) {
+      throw new Error();
+    }
+    change.coffeeCollected = coffee;
+    user.coffeeCollected = coffee;
+  }
+  if (addToFavourites) {
+    const favourites = user.favouriteShops;
+    favourites.unshift(addToFavourites);
+    change.favouriteShops = favourites;
+    user.favouriteShops = favourites;
+  }
+  if (removeFromFavourites) {
+    const favourites = user.favouriteShops;
+    const updatedFavourites = favourites.filter(
+      (shop) => shop !== removeFromFavourites
+    );
+    change.favouriteShops = updatedFavourites;
+    user.favouriteShops = updatedFavourites;
+  }
+  const updateUser = await client
+    .db(dbName)
+    .collection("users")
+    .updateOne({ username }, { $set: change });
+
+  if (updateUser.acknowledged === true) {
+    return user;
+  }
+};
+
+exports.findUserByUsername = async (username) => {
+  try {
     const user = await client
       .db(dbName)
       .collection("users")
-      .findOne({ username });
-    const change = {};
-    
-    if (newPhoto) {
-      if (typeof newPhoto !== "string") {
-        throw new Error();
-      }
-      const photos = user.photosPosted;
-      photos.unshift(newPhoto);
-      change.photosPosted = photos;
-      user.photosPosted = photos;
-    }
+      .findOne({ username: username });
 
-    if (profilePicture) {
-      if (typeof profilePicture !== "string") {
-        throw new Error();
-      }
-      change.profilePicture = profilePicture;
-      user.profilePicture = profilePicture;
-    }
-
-    if (changeCoffee) {
-      let coffee = user.coffeeCollected;
-      if (+changeCoffee === 1) {
-        coffee++;
-      }
-      if (+changeCoffee === -1) {
-        coffee = 0;
-      }
-      change.coffeeCollected = coffee;
-      user.coffeeCollected = coffee;
-    }
-    if (addToFavourites) {
-      const favourites = user.favouriteShops;
-      favourites.unshift(addToFavourites);
-      change.favouriteShops = favourites;
-      user.favouriteShops = favourites;
-    }
-    if (removeFromFavourites) {
-      const favourites = user.favouriteShops;
-      const updatedFavourites = favourites.filter(
-        (shop) => shop !== removeFromFavourites
-      );
-      change.favouriteShops = updatedFavourites;
-      user.favouriteShops = updatedFavourites;
-    }
-    const updateUser = await client
-      .db(dbName)
-      .collection("users")
-      .updateOne({ username }, { $set: change });
-
-    if (updateUser.acknowledged === true) {
+    if (!user) {
+      throw new Error("User not found");
+    } else {
       return user;
     }
-    
-  };
-  
-  exports.findUserByUsername = async (username) => {
-    try {
-      const user = await client
-        .db(dbName)
-        .collection("users")
-        .findOne({ username: username });
-  
-      if (!user) {
-        throw new Error("User not found");
-      } else {
-        return user;
-      }
-    } catch (error) {
-      console.error("Error finding user by username:", error);
-      throw new Error("Failed to find user by username");
-    }
-  };
+  } catch (error) {
+    console.error("Error finding user by username:", error);
+    throw new Error("Failed to find user by username");
+  }
+};

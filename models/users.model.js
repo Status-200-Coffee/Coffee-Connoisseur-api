@@ -39,12 +39,10 @@ exports.updateUserByUsername = async (
     if (!newPhoto && !changeCoffee && !addToFavourites && !removeFromFavourites && !profilePicture) {
       throw new Error();
     }
-
     const user = await client
       .db(dbName)
       .collection("users")
       .findOne({ username });
-
     const change = {};
     
     if (newPhoto) {
@@ -76,14 +74,12 @@ exports.updateUserByUsername = async (
       change.coffeeCollected = coffee;
       user.coffeeCollected = coffee;
     }
-
     if (addToFavourites) {
       const favourites = user.favouriteShops;
-      favourites.unshift(5);
+      favourites.unshift(addToFavourites);
       change.favouriteShops = favourites;
       user.favouriteShops = favourites;
     }
-
     if (removeFromFavourites) {
       const favourites = user.favouriteShops;
       const updatedFavourites = favourites.filter(
@@ -92,15 +88,15 @@ exports.updateUserByUsername = async (
       change.favouriteShops = updatedFavourites;
       user.favouriteShops = updatedFavourites;
     }
-
     const updateUser = await client
       .db(dbName)
       .collection("users")
-      .updateOne({ username }, { $set: { change } });
+      .updateOne({ username }, { $set: change });
 
-    if(updateUser.acknowledged === true) {
+    if (updateUser.acknowledged === true) {
       return user;
     }
+    
   };
   
   exports.findUserByUsername = async (username) => {

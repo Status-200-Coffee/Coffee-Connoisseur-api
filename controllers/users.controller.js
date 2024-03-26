@@ -1,4 +1,8 @@
-const { findUsers, updateUserByUsername } = require("../models/users.model");
+const {
+  findUsers,
+  updateUserByUsername,
+  insertUser,
+} = require("../models/users.model");
 
 exports.getUsers = async (ctx, next) => {
   try {
@@ -8,6 +12,20 @@ exports.getUsers = async (ctx, next) => {
     console.error("Error getting users:", error);
     ctx.status = 500;
     ctx.body = { error: "Failed to retrieve users" };
+  }
+};
+
+exports.postUser = async (ctx, next) => {
+  const newUser = ctx.request.body;
+  newUser.coffeeCollected = 1;
+  newUser.photosPosted = [];
+  newUser.favouriteShops = [];
+  try {
+    const user = await insertUser(newUser);
+    ctx.status = 201;
+    ctx.body = { user };
+  } catch (error) {
+    next(error);
   }
 };
 

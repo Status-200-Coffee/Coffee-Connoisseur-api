@@ -1,6 +1,11 @@
 const { client } = require("../db/connection");
-
 const { haversineDistanceBetweenPointsInKm } = require("../utils");
+
+let dbName = "coffee-conneisseur-api";
+
+if (process.env.NODE_ENV === "test") {
+  dbName += "-test";
+}
 
 exports.findShopsByCity = async (city, filters, sortBy, orderBy = 'asc') => {
   try {
@@ -26,7 +31,7 @@ exports.findShopsByCity = async (city, filters, sortBy, orderBy = 'asc') => {
     }
 
     const result = await client
-      .db("coffee-conneisseur-api")
+      .db(dbName)
       .collection(`coffee-shops-${city}`)
       .find(query)
       .sort(sortOption)
@@ -83,7 +88,7 @@ exports.findShopsByCity = async (city, filters, sortBy, orderBy = 'asc') => {
 exports.findShopById = async (city, shop_id) => {
   await client.connect();
   const result = await client
-    .db("coffee-conneisseur-api")
+    .db(dbName)
     .collection(`coffee-shops-${city}`)
     .findOne({ _id: shop_id });
   if (!result) {
@@ -105,7 +110,7 @@ exports.updateShopById = async (
   await client.connect();
 
   const shop = await client
-    .db("coffee-conneisseur-api")
+    .db(dbName)
     .collection(`coffee-shops-${city}`)
     .findOne({ _id: shop_id });
 
@@ -119,7 +124,7 @@ exports.updateShopById = async (
     ).toFixed(1);
 
     const updateShop = await client
-      .db("coffee-conneisseur-api")
+      .db(dbName)
       .collection(`coffee-shops-${city}`)
       .updateOne(
         { _id: shop_id },
@@ -135,7 +140,7 @@ exports.updateShopById = async (
     photos.push(newPhoto);
 
     const updateShop = await client
-      .db("coffee-conneisseur-api")
+      .db(dbName)
       .collection(`coffee-shops-${city}`)
       .updateOne({ _id: shop_id }, { $set: { userImages: photos } });
 

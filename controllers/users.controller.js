@@ -1,4 +1,6 @@
-const { findUsers, findUserByUsername } = require("../models/users.model");
+
+const { findUsers, findUserByUsername,  updateUserByUsername } = require("../models/users.model");
+
 
 exports.getUsers = async (ctx, next) => {
   try {
@@ -6,10 +8,11 @@ exports.getUsers = async (ctx, next) => {
     ctx.body = { users };
   } catch (error) {
     console.error("Error getting users:", error);
-    ctx.status = 500; 
+    ctx.status = 500;
     ctx.body = { error: "Failed to retrieve users" };
   }
 };
+
 
 exports.getUserByUsername = async (ctx, next) => {
     const { username } = ctx.params;
@@ -23,3 +26,15 @@ exports.getUserByUsername = async (ctx, next) => {
       return next();
     }
   };
+
+exports.patchUserByUsername = async (ctx, next) => {
+  const { username } = ctx.params;
+  const update = ctx.request.body;
+  try {
+    const user = await updateUserByUsername(username, update);
+    ctx.body = { user };
+  } catch (error) {
+    next(error);
+  }
+};
+

@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "seed-test": "node ./db/seeds/run-seed-test.js",
     "seed-dev": "node ./db/seeds/run-seed-dev.js",
     "start": "node app.js",
     "test": "jest"

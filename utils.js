@@ -7,5 +7,5 @@ exports.haversineDistanceBetweenPointsInKm = (lat1, lon1, lat2, lon2) => {
     const d = Math.acos(
       Math.sin(p1) * Math.sin(p2) + Math.cos(p1) * Math.cos(p2) * Math.cos(deltaLambda),
     ) * R;
-    return d/1000;
+    return (d/1000).toFixed(2);
   }

@@ -285,7 +285,37 @@ describe("GET /api/users", () => {
   });
 });
 
-describe.only("PATCH /api/users/:username", () => {
+describe("POST /api/users", () => {
+  test("Status:201 responds with new user object", async () => {
+    const newUser = {
+      username: "newUser",
+      email: "newUserEmail",
+    };
+    const response = await request(app.callback())
+      .post("/api/users")
+      .send(newUser);
+    const { user } = response.body;
+    expect(response.status).toBe(201);
+    expect(user).toMatchObject({
+      username: "newUser",
+      email: "newUserEmail",
+      coffeeCollected: 1,
+      photosPosted: [],
+      favouriteShops: [],
+    });
+    expect(user).toHaveProperty("_id");
+  });
+  test("Status:404 returns an error when username and email keys are missing", async () => {
+    const newUser = { username: "testUser" };
+    const response = await request(app.callback())
+      .post("/api/users")
+      .send(newUser);
+    expect(response.status).toBe(404);
+    expect(response.text).toBe("Not Found");
+  });
+});
+
+describe("PATCH /api/users/:username", () => {
   test("Status:200 responds with updated user object when new photo added", async () => {
     const update = { newPhoto: "newPhotoUrl" };
     const response = await request(app.callback())
@@ -308,7 +338,6 @@ describe.only("PATCH /api/users/:username", () => {
     const response = await request(app.callback())
       .patch("/api/users/mondayafternoonvibes")
       .send(update);
-    const { user } = response.body;
     expect(response.status).toBe(404);
     expect(response.text).toBe("Not Found");
   });
@@ -351,7 +380,6 @@ describe.only("PATCH /api/users/:username", () => {
     const response = await request(app.callback())
       .patch("/api/users/mondayafternoonvibes")
       .send(update);
-    const { user } = response.body;
     expect(response.status).toBe(404);
     expect(response.text).toBe("Not Found");
   });
@@ -394,7 +422,6 @@ describe.only("PATCH /api/users/:username", () => {
     const response = await request(app.callback())
       .patch("/api/users/mondayafternoonvibes")
       .send(update);
-    const { user } = response.body;
     expect(response.status).toBe(404);
     expect(response.text).toBe("Not Found");
   });
@@ -403,7 +430,6 @@ describe.only("PATCH /api/users/:username", () => {
     const response = await request(app.callback())
       .patch("/api/users/notauser")
       .send(update);
-    const { user } = response.body;
     expect(response.status).toBe(404);
     expect(response.text).toBe("Not Found");
   });

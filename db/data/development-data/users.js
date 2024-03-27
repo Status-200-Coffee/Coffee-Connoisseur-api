@@ -3,6 +3,7 @@ module.exports = [
     _id: 1,
     profilePicture: "https://media.istockphoto.com/id/1284084741/vector/cute-bear-with-sunglasses-drinking-bubble-tea-cartoon-vector-illustration.jpg?s=612x612&w=0&k=20&c=V2bK9SCldetnVG-wzAxF55vj90iZXXgblKb2bviyZU4=",
     username: "crazycappuccino123",
+    password: "pa33worD",
     email: "email@coffee.com",
     coffeeCollected: 9,
     photosPosted: [
@@ -19,6 +20,7 @@ module.exports = [
     _id: 2,
     profilePicture: "https://media.istockphoto.com/id/1284824458/vector/cute-polar-bear-with-sunglasses-drinking-bubble-tea-cartoon-vector-illustration.jpg?s=612x612&w=0&k=20&c=QSLUJtn4IfffDEVm6R75Oi-WJpajGEKO52pRxT68mBc=",
     username: "mondayafternoonvibes",
+    password: "password123",
     email: "monday@coffee.com",
     coffeeCollected: 0,
     photosPosted: [
@@ -33,6 +35,7 @@ module.exports = [
     _id: 3,
     profilePicture: "https://media.istockphoto.com/id/1285010832/vector/cute-shiba-inu-dog-with-sunglasses-drinking-bubble-tea-cartoon-vector-illustration.jpg?s=612x612&w=0&k=20&c=foZrohn-uLq-0oukOF0vIYOcq7DldYB97nKUTm1aOA4=",
     username: "easter",
+    password: "PASSWORD100",
     email: "cup@coffee.com",
     coffeeCollected: 1,
     photosPosted: [
@@ -49,6 +52,7 @@ module.exports = [
     _id: 4,
     profilePicture: "https://static.vecteezy.com/system/resources/previews/023/362/824/non_2x/cute-panda-drink-coffee-cartoon-icon-illustration-animal-drink-icon-concept-isolated-premium-flat-cartoon-style-vector.jpg",
     username: "mochamonster",
+    password: "999password",
     email: "scary@coffee.com",
     coffeeCollected: 5,
     photosPosted: [

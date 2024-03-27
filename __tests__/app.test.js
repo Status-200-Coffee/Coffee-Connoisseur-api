@@ -291,6 +291,7 @@ describe("POST /api/users", () => {
     const newUser = {
       username: "newUser",
       email: "newUserEmail",
+      password: "newPassword"
     };
     const response = await request(app.callback())
       .post("/api/users")
@@ -300,6 +301,7 @@ describe("POST /api/users", () => {
     expect(user).toMatchObject({
       username: "newUser",
       email: "newUserEmail",
+      password: "newPassword",
       coffeeCollected: 1,
       photosPosted: [],
       favouriteShops: [],

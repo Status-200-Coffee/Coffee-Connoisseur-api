@@ -17,7 +17,7 @@ exports.findUsers = async () => {
 };
 
 exports.insertUser = async (newUser) => {
-  if (!newUser.username || !newUser.email) {
+  if (!newUser.username || !newUser.email || !newUser.password) {
     throw new Error();
   }
   const insertUser = await client

@@ -33,7 +33,6 @@ exports.findCities = async (lat, long) => {
             ? -1
             : 0
       );
-      console.log(resultSortedByDistance)
       return resultSortedByDistance[0];
     }
 

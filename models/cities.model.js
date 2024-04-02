@@ -27,12 +27,13 @@ exports.findCities = async (lat, long) => {
       });
       const resultSortedByDistance = resultWithDistanceProperty.sort(
         (city1, city2) =>
-          city1.distance > city2.distance
+          +city1.distance > +city2.distance
             ? 1
-            : city1.distance < city2.distance
+            : +city1.distance < +city2.distance
             ? -1
             : 0
       );
+      console.log(resultSortedByDistance)
       return resultSortedByDistance[0];
     }
 

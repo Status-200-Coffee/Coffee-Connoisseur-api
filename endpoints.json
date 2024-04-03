@@ -188,7 +188,7 @@
   },
   "PATCH /api/users/:username": {
     "description": "serves the updated user object",
-    "reqBodyFormat": [{ "profilePicture": "newProfilePicture" }, { "newPhoto": "newPhotoUrl" }, {"changeCoffee": 1}, { "addToFavourites": 5 }, { "removeFromFavourites": 4 }],
+    "reqBodyFormat": [{ "profilePicture": "newProfilePicture" }, { "newPhoto": "newPhotoUrl" }, {"changeCoffee": 1}, { "addToFavourites": {"Newcastle": 5} }, { "removeFromFavourites": {"Newcastle": 8} }],
     "exampleResponse": {
       "shop": {
         "_id": 2,

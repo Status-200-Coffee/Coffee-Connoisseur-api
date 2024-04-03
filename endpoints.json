@@ -143,7 +143,10 @@
           "email": "email@coffee.com",
           "coffeeCollected": 9,
           "photosPosted": [],
-          "favouriteShops": [3, 2, 8]
+          "favouriteShops": {
+            "Newcastle": [2],
+            "Carlisle": [8]
+          }
         }
       ]
     }
@@ -161,7 +164,9 @@
         "email": "newUserEmail",
         "coffeeCollected": 1,
         "photosPosted": [],
-        "favouriteShops": []
+        "favouriteShops": {
+          "Newcastle": [2]
+        }
       }
     }
   },
@@ -176,36 +181,40 @@
         "coffeeCollected": 1,
         "photosPosted": [
           "https://imgur.com/VcZkC8y.jpeg",
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlopsqGOeuq1UgJCy-dTQCzrBeiCgTW-CT_Q&usqp=CAU",
-          "https://texashillcountryoliveco.com/cdn/shop/articles/is-olive-oil-in-coffee-a-new-trend-worth-trying-158746.jpg?v=1682382832",
-          "https://media-cldnry.s-nbcnews.com/image/upload/t_fit-1500w,f_auto,q_auto:best/rockcms/2023-09/coffee-day-mc-230922-e0fb52.jpg",
-          "https://foolproofliving.com/wp-content/uploads/2019/03/Turkish-Coffee-Recipe-Image-500x500.jpg",
-          "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/macchiato-027-35b22b8.jpg"
+          "https://encrypted-tbn0.gstatic.com/images"
         ],
-        "favouriteShops": [2, 3, 5, 8, 9]
+        "favouriteShops": {
+          "Newcastle": [2],
+          "Carlisle": [5, 8]
+        }
       }
     }
   },
   "PATCH /api/users/:username": {
     "description": "serves the updated user object",
-    "reqBodyFormat": [{ "profilePicture": "newProfilePicture" }, { "newPhoto": "newPhotoUrl" }, {"changeCoffee": 1}, { "addToFavourites": {"Newcastle": 5} }, { "removeFromFavourites": {"Newcastle": 8} }],
+    "reqBodyFormat": [
+      { "profilePicture": "newProfilePicture" },
+      { "newPhoto": "newPhotoUrl" },
+      { "changeCoffee": 1 },
+      { "addToFavourites": { "Newcastle": 5 } },
+      { "removeFromFavourites": { "Newcastle": 8 } }
+    ],
     "exampleResponse": {
-      "shop": {
-        "_id": 2,
-        "name": "Espresso Junction",
-        "mainImage": "",
-        "userImages": [],
-        "latitude": 54.98856,
-        "longitude": -1.59311,
-        "city": "Newcastle",
-        "totalRatings": 18,
-        "rating": 4.9,
-        "dogFriendly": false,
-        "dairyFree": true,
-        "hasSeating": true,
-        "description": "Crafted coffee, pure satisfaction."
+      "user": {
+        "_id": 3,
+        "profilePicture": "https://media.istockphoto.com/id/1285010832/vector/",
+        "username": "easter",
+        "password": "PASSWORD100",
+        "email": "cup@coffee.com",
+        "coffeeCollected": 1,
+        "photosPosted": [
+          "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/macchiato-027-35b22b8.jpg"
+        ],
+        "favouriteShops": {
+          "Newcastle": [2, 3, 9, 5],
+          "Carlisle": [5, 8]
+        }
       }
     }
   }
 }
-

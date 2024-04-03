@@ -14,7 +14,7 @@ module.exports = [
       "https://images.ctfassets.net/0e6jqcgsrcye/6zB3g0Zg5b2vxs4h27UdC9/31f5a59fafb90513fa0bd5fc566b61e6/americano_2x.jpg",
       "https://www.thespruceeats.com/thmb/5Sbf1PBoSKTAjHDFug66oMxQaV4=/600x400/filters:no_upscale():max_bytes(150000):strip_icc()/decafcoffeeMassimilianoFinzi-e1b2400aaa3045dc83471c9625193bfd.jpg",
     ],
-    favouriteShops: [3, 2, 8],
+    favouriteShops: ["N-3", "N-2","N-8"],
   },
   {
     _id: 2,
@@ -29,7 +29,7 @@ module.exports = [
       "https://imgur.com/YnAwOWW.jpeg",
       "https://imgur.com/wC2OduC.jpeg",
     ],
-    favouriteShops: [1, 4, 6, 10],
+    favouriteShops: ["C-1", "C-4", "C-6", "C-10"],
   },
   {
     _id: 3,
@@ -46,7 +46,7 @@ module.exports = [
       "https://foolproofliving.com/wp-content/uploads/2019/03/Turkish-Coffee-Recipe-Image-500x500.jpg",
       "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/macchiato-027-35b22b8.jpg",
     ],
-    favouriteShops: [2, 3, 5, 8, 9],
+    favouriteShops: ["N-2", "N-3", "N-5", "N-8", "N-9"],
   },
   {
     _id: 4,
@@ -64,6 +64,6 @@ module.exports = [
       "https://balancecoffee.co.uk/cdn/shop/articles/anshu-a-HRyen_ECEHk-unsplash-scaled.jpg?v=1663268902",
       "https://www.homeyohmy.com/wp-content/uploads/2019/12/Vietnamese-iced-coffee-recipe-500x375.jpg",
     ],
-    favouriteShops: [1, 3, 7, 6, 10],
+    favouriteShops: ["C-1", "C-3", "C-7", "C-6", "C-10"],
   },
 ];

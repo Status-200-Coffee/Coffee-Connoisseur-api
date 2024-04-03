@@ -51,8 +51,11 @@ describe("GET /api/shops/:city filters", () => {
       {
         _id: 3,
         name: "shop3",
-        mainImage:
-        {image: "https://www.barryanddistrictnews.co.uk/resources/images/3329861.jpg?type=mds-article-962", altText: "image of shop"},
+        mainImage: {
+          image:
+            "https://www.barryanddistrictnews.co.uk/resources/images/3329861.jpg?type=mds-article-962",
+          altText: "image of shop",
+        },
         userImages: [
           "https://www.foodandwine.com/thmb/KzfhJG9naqoKK6ubunTvOp1GhiU=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/Partners-Cortado-FT-BLOG0523-7e4f50be961e4a6490fdfa5a34d6e0f5.jpg",
           "https://abdragons.com/product_images/uploaded_images/depositphotos-43334505-m-2015.jpg",
@@ -97,8 +100,11 @@ describe("GET /api/shops/:city filters", () => {
       {
         _id: 3,
         name: "shop3",
-        mainImage:
-        {image: "https://www.barryanddistrictnews.co.uk/resources/images/3329861.jpg?type=mds-article-962", altText: "image of shop"},
+        mainImage: {
+          image:
+            "https://www.barryanddistrictnews.co.uk/resources/images/3329861.jpg?type=mds-article-962",
+          altText: "image of shop",
+        },
         userImages: [
           "https://www.foodandwine.com/thmb/KzfhJG9naqoKK6ubunTvOp1GhiU=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/Partners-Cortado-FT-BLOG0523-7e4f50be961e4a6490fdfa5a34d6e0f5.jpg",
           "https://abdragons.com/product_images/uploaded_images/depositphotos-43334505-m-2015.jpg",
@@ -283,7 +289,6 @@ describe("GET /api/users", () => {
     expect(Array.isArray(users)).toBe(true);
     expect(users.length).toBe(4);
   });
-  //error handling
 });
 
 describe("POST /api/users", () => {
@@ -291,7 +296,7 @@ describe("POST /api/users", () => {
     const newUser = {
       username: "newUser",
       email: "newUserEmail",
-      password: "newPassword"
+      password: "newPassword",
     };
     const response = await request(app.callback())
       .post("/api/users")
@@ -350,7 +355,7 @@ describe("PATCH /api/users/:username", () => {
       email: "scary@coffee.com",
       coffeeCollected: 5,
       photosPosted: ["newPhotoUrl", "url", "url", "url", "url", "url", "url"],
-      favouriteShops: [1, 2, 3, 4, 5],
+      favouriteShops: { Newcastle: [7, 10], Carlisle: [1, 3, 6] },
     });
   });
   test("Status:404 returns an error when newPhoto body is not a string", async () => {
@@ -375,7 +380,7 @@ describe("PATCH /api/users/:username", () => {
       email: "cup@coffee.com",
       coffeeCollected: 2,
       photosPosted: ["url"],
-      favouriteShops: [],
+      favouriteShops: { Newcastle: [2, 3, 9], Carlisle: [5, 8] },
     });
   });
   test("Status:200 responds with updated user object when coffee collected reset to 0", async () => {
@@ -392,7 +397,7 @@ describe("PATCH /api/users/:username", () => {
       email: "email@coffee.com",
       coffeeCollected: 0,
       photosPosted: ["url", "url"],
-      favouriteShops: [3, 2],
+      favouriteShops: { Newcastle: [3, 8], Carlisle: [2] },
     });
   });
   test("Status:404 returns an error when changeCoffee value is not 1 or -1", async () => {
@@ -404,7 +409,7 @@ describe("PATCH /api/users/:username", () => {
     expect(response.text).toBe("Not Found");
   });
   test("Status:200 responds with updated user object when shop added to favourites", async () => {
-    const update = { addToFavourites: 5 };
+    const update = { addToFavourites: { Newcastle: 5 } };
     const response = await request(app.callback())
       .patch("/api/users/crazycappuccino123")
       .send(update);
@@ -417,11 +422,28 @@ describe("PATCH /api/users/:username", () => {
       email: "email@coffee.com",
       coffeeCollected: 9,
       photosPosted: ["url", "url"],
-      favouriteShops: [5, 3, 2],
+      favouriteShops: { Newcastle: [3, 8, 5], Carlisle: [2] },
+    });
+  });
+  test("Status:200 responds with updated user object when shop added to favourites where city does not already exist as a key", async () => {
+    const update = { addToFavourites: { Manchester: 8 } };
+    const response = await request(app.callback())
+      .patch("/api/users/crazycappuccino123")
+      .send(update);
+    const { user } = response.body;
+    expect(response.status).toBe(200);
+    expect(user).toEqual({
+      _id: 1,
+      profilePicture: " imageUrl",
+      username: "crazycappuccino123",
+      email: "email@coffee.com",
+      coffeeCollected: 9,
+      photosPosted: ["url", "url"],
+      favouriteShops: { Newcastle: [3, 8], Carlisle: [2], Manchester: [8] },
     });
   });
   test("Status:200 responds with updated user object when shop removed from favourites", async () => {
-    const update = { removeFromFavourites: 4 };
+    const update = { removeFromFavourites: { Newcastle: 4 } };
     const response = await request(app.callback())
       .patch("/api/users/mondayafternoonvibes")
       .send(update);
@@ -434,7 +456,7 @@ describe("PATCH /api/users/:username", () => {
       email: "monday@coffee.com",
       coffeeCollected: 0,
       photosPosted: ["url", "url", "url"],
-      favouriteShops: [1],
+      favouriteShops: { Newcastle: [6], Carlisle: [1, 10] },
     });
   });
   test("Status:404 returns an error when invalid request body received", async () => {
@@ -467,7 +489,7 @@ describe("GET /api/users/:username", () => {
       email: "cup@coffee.com",
       coffeeCollected: 1,
       photosPosted: ["url"],
-      favouriteShops: [],
+      favouriteShops: { Newcastle: [2, 3, 9], Carlisle: [5, 8] },
     });
   });
   test("GET /api/users/:username - User Not Found", async () => {
@@ -511,7 +533,6 @@ describe("POST /api/cities", () => {
   });
 });
 
-
 describe("POST /api/shops/:city", () => {
   test("It should create a new shop in the specified city", async () => {
     const newShopData = {
@@ -527,9 +548,9 @@ describe("POST /api/shops/:city", () => {
     };
 
     const response = await request(app.callback())
-    .post("/api/shops/city1")
-    .send(newShopData)
-    .expect(201);
+      .post("/api/shops/city1")
+      .send(newShopData)
+      .expect(201);
 
     const { shop } = response.body;
     expect(shop.name).toBe(newShopData.name);
@@ -540,7 +561,7 @@ describe("POST /api/shops/:city", () => {
     expect(shop.latitude).toBeCloseTo(parseFloat(newShopData.lat));
     expect(shop.longitude).toBeCloseTo(parseFloat(newShopData.long));
     expect(shop.rating).toBeCloseTo(parseFloat(newShopData.rating));
-    expect(shop.userImages).toEqual(newShopData.userImages.split(','));
+    expect(shop.userImages).toEqual(newShopData.userImages.split(","));
   });
 
   test("It should return 400 if shop data is incomplete", async () => {
@@ -549,11 +570,10 @@ describe("POST /api/shops/:city", () => {
     };
 
     const response = await request(app.callback())
-      .post("/api/shops/city1")  
+      .post("/api/shops/city1")
       .send(incompleteShopData)
       .expect(400);
 
     expect(response.body.error).toBe("Shop data is incomplete");
-  })
-})
-
+  });
+});

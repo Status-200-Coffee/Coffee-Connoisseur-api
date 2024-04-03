@@ -1,6 +1,6 @@
 module.exports = [
   {
-    _id: 'C-1',
+    _id: 1,
     name: "Roast & Revel",
     mainImage:
     {
@@ -24,7 +24,7 @@ module.exports = [
     description: "Experience the perfect blend of rich flavors and cozy ambiance at our artisanal coffee shop, where every sip is a moment of pure indulgence"
   },
   {
-    _id: 'C-2',
+    _id: 2,
     name: "The Coffee Club",
     mainImage: {
       image:
@@ -49,7 +49,7 @@ module.exports = [
     description: "Sip, savor, and socialize in our inviting coffee haven, where each cup is crafted with passion and precision to elevate your daily ritual."
   },
   {
-    _id: 'C-3',
+    _id: 3,
     name: "Bean Works",
     mainImage:
     {
@@ -75,7 +75,7 @@ module.exports = [
     description: "Crafted coffee, community, and comfort await at our cozy corner café."
   },
   {
-    _id: 'C-4',
+    _id: 4,
     name: "Brew Haven Coffee Co",
     mainImage:
     {
@@ -101,7 +101,7 @@ module.exports = [
     "Your favorite brews, served with a smile, in our cozy coffee nook."
   },
   {
-    _id: 'C-5',
+    _id: 5,
     name: "Rise & Grind",
     mainImage:
     {
@@ -126,7 +126,7 @@ module.exports = [
     description: "Where every cup tells a story, brewed just for you."
   },
   {
-    _id: 'C-6',
+    _id: 6,
     name: "Espresso Emporium",
     mainImage:
     {
@@ -152,7 +152,7 @@ module.exports = [
     description: "Bold brews, cozy vibes, your perfect coffee stop."
   },
   {
-    _id: 'C-7',
+    _id: 7,
     name: "Steamy Bean Cafe",
     mainImage:
     {
@@ -178,7 +178,7 @@ module.exports = [
     description: "Where every sip sparks joy, one cup at a time."
   },
   {
-    _id: 'C-8',
+    _id: 8,
     name: "Coffee Corner",
     mainImage:
     {
@@ -203,7 +203,7 @@ module.exports = [
     description: "Your daily dose of happiness, served steaming hot."
   },
   {
-    _id: 'C-9',
+    _id: 9,
     name: "Brewed Awakening",
     mainImage:
     {
@@ -230,7 +230,7 @@ module.exports = [
     "Fuel your day with our perfect brews."
   },
   {
-    _id: 'C-10',
+    _id: 10,
     name: "The Cozy Cup",
     mainImage:
     {

@@ -1,7 +1,8 @@
 module.exports = [
   {
     _id: 1,
-    profilePicture: "https://media.istockphoto.com/id/1284084741/vector/cute-bear-with-sunglasses-drinking-bubble-tea-cartoon-vector-illustration.jpg?s=612x612&w=0&k=20&c=V2bK9SCldetnVG-wzAxF55vj90iZXXgblKb2bviyZU4=",
+    profilePicture:
+      "https://media.istockphoto.com/id/1284084741/vector/cute-bear-with-sunglasses-drinking-bubble-tea-cartoon-vector-illustration.jpg?s=612x612&w=0&k=20&c=V2bK9SCldetnVG-wzAxF55vj90iZXXgblKb2bviyZU4=",
     username: "crazycappuccino123",
     password: "pa33worD",
     email: "email@coffee.com",
@@ -14,11 +15,12 @@ module.exports = [
       "https://images.ctfassets.net/0e6jqcgsrcye/6zB3g0Zg5b2vxs4h27UdC9/31f5a59fafb90513fa0bd5fc566b61e6/americano_2x.jpg",
       "https://www.thespruceeats.com/thmb/5Sbf1PBoSKTAjHDFug66oMxQaV4=/600x400/filters:no_upscale():max_bytes(150000):strip_icc()/decafcoffeeMassimilianoFinzi-e1b2400aaa3045dc83471c9625193bfd.jpg",
     ],
-    favouriteShops: ["N-3", "C-2","N-8"],
+    favouriteShops: { Newcastle: [3, 8], Carlisle: [2] },
   },
   {
     _id: 2,
-    profilePicture: "https://media.istockphoto.com/id/1284824458/vector/cute-polar-bear-with-sunglasses-drinking-bubble-tea-cartoon-vector-illustration.jpg?s=612x612&w=0&k=20&c=QSLUJtn4IfffDEVm6R75Oi-WJpajGEKO52pRxT68mBc=",
+    profilePicture:
+      "https://media.istockphoto.com/id/1284824458/vector/cute-polar-bear-with-sunglasses-drinking-bubble-tea-cartoon-vector-illustration.jpg?s=612x612&w=0&k=20&c=QSLUJtn4IfffDEVm6R75Oi-WJpajGEKO52pRxT68mBc=",
     username: "mondayafternoonvibes",
     password: "password123",
     email: "monday@coffee.com",
@@ -29,11 +31,12 @@ module.exports = [
       "https://imgur.com/YnAwOWW.jpeg",
       "https://imgur.com/wC2OduC.jpeg",
     ],
-    favouriteShops: ["C-1", "N-4", "N-6", "C-10"],
+    favouriteShops: { Newcastle: [4, 6], Carlisle: [1, 10] },
   },
   {
     _id: 3,
-    profilePicture: "https://media.istockphoto.com/id/1285010832/vector/cute-shiba-inu-dog-with-sunglasses-drinking-bubble-tea-cartoon-vector-illustration.jpg?s=612x612&w=0&k=20&c=foZrohn-uLq-0oukOF0vIYOcq7DldYB97nKUTm1aOA4=",
+    profilePicture:
+      "https://media.istockphoto.com/id/1285010832/vector/cute-shiba-inu-dog-with-sunglasses-drinking-bubble-tea-cartoon-vector-illustration.jpg?s=612x612&w=0&k=20&c=foZrohn-uLq-0oukOF0vIYOcq7DldYB97nKUTm1aOA4=",
     username: "easter",
     password: "PASSWORD100",
     email: "cup@coffee.com",
@@ -46,11 +49,12 @@ module.exports = [
       "https://foolproofliving.com/wp-content/uploads/2019/03/Turkish-Coffee-Recipe-Image-500x500.jpg",
       "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/macchiato-027-35b22b8.jpg",
     ],
-    favouriteShops: ["N-2", "N-3", "C-5", "C-8", "N-9"],
+    favouriteShops: { Newcastle: [2, 3, 9], Carlisle: [5, 8] },
   },
   {
     _id: 4,
-    profilePicture: "https://static.vecteezy.com/system/resources/previews/023/362/824/non_2x/cute-panda-drink-coffee-cartoon-icon-illustration-animal-drink-icon-concept-isolated-premium-flat-cartoon-style-vector.jpg",
+    profilePicture:
+      "https://static.vecteezy.com/system/resources/previews/023/362/824/non_2x/cute-panda-drink-coffee-cartoon-icon-illustration-animal-drink-icon-concept-isolated-premium-flat-cartoon-style-vector.jpg",
     username: "mochamonster",
     password: "999password",
     email: "scary@coffee.com",
@@ -64,6 +68,6 @@ module.exports = [
       "https://balancecoffee.co.uk/cdn/shop/articles/anshu-a-HRyen_ECEHk-unsplash-scaled.jpg?v=1663268902",
       "https://www.homeyohmy.com/wp-content/uploads/2019/12/Vietnamese-iced-coffee-recipe-500x375.jpg",
     ],
-    favouriteShops: ["C-1", "C-3", "N-7", "C-6", "N-10"],
+    favouriteShops: { Newcastle: [7, 10], Carlisle: [1, 3, 6] },
   },
 ];

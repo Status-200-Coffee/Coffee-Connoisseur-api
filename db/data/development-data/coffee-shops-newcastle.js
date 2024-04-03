@@ -1,6 +1,6 @@
 module.exports = [
   {
-    _id: 'N-1',
+    _id: 1,
     name: "Brewed Bliss Café",
     mainImage: {
       image:
@@ -23,7 +23,7 @@ module.exports = [
     description: "Where coffee meets perfection, every time.",
   },
   {
-    _id: 'N-2',
+    _id: 2,
     name: "Espresso Junction",
     mainImage: {
       image:
@@ -48,7 +48,7 @@ module.exports = [
     description: "Crafted coffee, pure satisfaction.",
   },
   {
-    _id: 'N-3',
+    _id: 3,
     name: "Roast & Grounds",
     mainImage: {
       image:
@@ -73,7 +73,7 @@ module.exports = [
     description: "Your daily pick-me-up, perfected.",
   },
   {
-    _id: 'N-4',
+    _id: 4,
     name: "The Daily Grind Coffee Co",
     mainImage: {
       image:
@@ -98,7 +98,7 @@ module.exports = [
       "Experience the art of coffee, where every brew is a masterpiece waiting to be savored.",
   },
   {
-    _id: 'N-5',
+    _id: 5,
     name: "Mocha Muse",
     mainImage: {
       image:
@@ -123,7 +123,7 @@ module.exports = [
       "Savor the moment with our handcrafted brews, where each cup tells a tale of flavor and passion.",
   },
   {
-    _id: 'N-6',
+    _id: 6,
     name: "Brew & Bites Lounge",
     mainImage: {
       image:
@@ -149,7 +149,7 @@ module.exports = [
       "Discover the perfect blend of aroma and taste in every cup, handcrafted just for you.",
   },
   {
-    _id: 'N-7',
+    _id: 7,
     name: "Morning Dew Cafe",
     mainImage: {
       image:
@@ -175,7 +175,7 @@ module.exports = [
       "Unwind and indulge in our carefully curated coffee selection, where every sip is a moment of bliss.",
   },
   {
-    _id: 'N-8',
+    _id: 8,
     name: "Bean Counter",
     mainImage: {
       image:
@@ -199,7 +199,7 @@ module.exports = [
     description: "Crafted coffees, endless delight.",
   },
   {
-    _id: 'N-9',
+    _id: 9,
     name: "Brewed Awakening",
     mainImage: {
       image:
@@ -224,7 +224,7 @@ module.exports = [
     description: "Exquisite brews, endless joy.",
   },
   {
-    _id: 'N-10',
+    _id: 10,
     name: "Caffeine Cove",
     mainImage: {
       image:

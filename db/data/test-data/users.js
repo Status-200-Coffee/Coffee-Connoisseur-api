@@ -6,7 +6,7 @@ module.exports = [
     email: "email@coffee.com",
     coffeeCollected: 9,
     photosPosted: ["url", "url"],
-    favouriteShops: [3, 2],
+    favouriteShops: { Newcastle: [3, 8], Carlisle: [2] },
   },
   {
     _id: 2,
@@ -15,7 +15,7 @@ module.exports = [
     email: "monday@coffee.com",
     coffeeCollected: 0,
     photosPosted: ["url", "url", "url"],
-    favouriteShops: [1, 4],
+    favouriteShops: { Newcastle: [4, 6], Carlisle: [1, 10] },
   },
   {
     _id: 3,
@@ -24,7 +24,7 @@ module.exports = [
     email: "cup@coffee.com",
     coffeeCollected: 1,
     photosPosted: ["url"],
-    favouriteShops: [],
+    favouriteShops: { Newcastle: [2, 3, 9], Carlisle: [5, 8] },
   },
   {
     _id: 4,
@@ -33,6 +33,6 @@ module.exports = [
     email: "scary@coffee.com",
     coffeeCollected: 5,
     photosPosted: ["url", "url", "url", "url", "url", "url"],
-    favouriteShops: [1, 2, 3, 4, 5],
+    favouriteShops: { Newcastle: [7, 10], Carlisle: [1, 3, 6] },
   },
 ];

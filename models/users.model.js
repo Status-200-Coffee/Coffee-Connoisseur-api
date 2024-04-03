@@ -90,18 +90,31 @@ exports.updateUserByUsername = async (
     user.coffeeCollected = coffee;
   }
   if (addToFavourites) {
+    const [[city, shopId]] = Object.entries(addToFavourites);
     const favourites = user.favouriteShops;
-    favourites.unshift(addToFavourites);
+    for (const key in favourites) {
+      if (key === city) {
+        favourites[key].push(shopId);
+      }
+      if (!Object.keys(favourites).includes(city)) {
+        favourites[city] = [shopId];
+      }
+    }
     change.favouriteShops = favourites;
     user.favouriteShops = favourites;
   }
   if (removeFromFavourites) {
+    const [[city, shopId]] = Object.entries(removeFromFavourites);
     const favourites = user.favouriteShops;
-    const updatedFavourites = favourites.filter(
-      (shop) => shop !== removeFromFavourites
-    );
-    change.favouriteShops = updatedFavourites;
-    user.favouriteShops = updatedFavourites;
+    for (const key in favourites) {
+      if (key === city) {
+        const shopsArray = favourites[key];
+        const updatedFavourites = shopsArray.filter((shop) => shop !== shopId);
+        favourites[key] = updatedFavourites;
+      }
+    }
+    change.favouriteShops = favourites;
+    user.favouriteShops = favourites;
   }
   const updateUser = await client
     .db(dbName)

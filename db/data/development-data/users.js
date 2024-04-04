@@ -6,7 +6,7 @@ module.exports = [
     username: "crazycappuccino123",
     password: "pa33worD",
     email: "email@coffee.com",
-    coffeeCollected: 9,
+    coffeeCollected: 7,
     photosPosted: [
       "https://i.imgur.com/PhsVg66.jpeg",
       "https://esquirescoffee.co.uk/wp-content/uploads/2022/08/decaf-vs-reg-coffee-scaled.jpg",
@@ -24,7 +24,7 @@ module.exports = [
     username: "mondayafternoonvibes",
     password: "password123",
     email: "monday@coffee.com",
-    coffeeCollected: 0,
+    coffeeCollected: 5,
     photosPosted: [
       "https://imgur.com/V6YTu6A.jpeg",
       "https://imgur.com/Va7cyyZ.jpeg",
@@ -40,7 +40,7 @@ module.exports = [
     username: "easter",
     password: "PASSWORD100",
     email: "cup@coffee.com",
-    coffeeCollected: 1,
+    coffeeCollected: 5,
     photosPosted: [
       "https://imgur.com/VcZkC8y.jpeg",
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlopsqGOeuq1UgJCy-dTQCzrBeiCgTW-CT_Q&usqp=CAU",
@@ -58,7 +58,7 @@ module.exports = [
     username: "mochamonster",
     password: "999password",
     email: "scary@coffee.com",
-    coffeeCollected: 5,
+    coffeeCollected: 8,
     photosPosted: [
       "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/dalgona-coffee-ddfc357.jpg",
       "https://esquirescoffee.co.uk/wp-content/uploads/2019/07/Picture-1.pngxx_.png",

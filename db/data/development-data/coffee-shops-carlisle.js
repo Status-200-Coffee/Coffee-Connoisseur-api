@@ -243,7 +243,6 @@ module.exports = [
       "https://www.thespruceeats.com/thmb/HJrjMfXdLGHbgMhnM0fMkDx9XPQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/what-is-espresso-765702-hero-03_cropped-ffbc0c7cf45a46ff846843040c8f370c.jpg",
       "https://cdn.thetealmango.com/wp-content/uploads/2021/08/americano.jpg",
       "https://www.webstaurantstore.com/images/products/large/107135/1995935.jpg",
-      "",
     ],
     latitude: 54.8857,
     longitude: -2.9586,

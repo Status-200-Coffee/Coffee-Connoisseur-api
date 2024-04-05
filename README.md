@@ -1,21 +1,40 @@
 # Coffee Connoisseur API ☕️
 ## Project Summary
+
 Welcome to the Coffee Connoisseur API!👋 
 This API serves as the backend for the Coffee Connoisseur app, an application that allows users to search for coffee shops near them on a map, collect beans as a reward system when they post pictures of the coffee they purchase from the coffee shops. 
 If you're interested in the app itself, you can find it on GitHub : https://github.com/Status-200-Coffee/Coffee-Connoisseur-app 
 
 ## Introduction
+
 This API is built using Node.js, Koa.js, and MongoDB. It provides endpoints for retrieving coffee shop data, user profiles, and reward systems. 
 
 ## API Base URL
+
 You can access the API at: https://coffee-connoisseur-api.onrender.com/api
 
 ## Prerequisites
+
 Before you begin, ensure you have met the following requirements:
 * You have installed the latest version of Node.js and MongoDB.
 * You have a MongoDB Atlas account.
 
+## MongoDB Atlas Setup
+
+Before you can use the Coffee Connoisseur API, you need to set up a MongoDB Atlas account and create a database cluster. Follow these steps:
+
+1. Sign up for a [MongoDB Atlas](https://www.mongodb.com/cloud/atlas/register) account if you don't have one.
+2. Once you're logged in, create a new project.
+3. Within the new project, build a new cluster.
+4. After the cluster is created, click on "CONNECT" button.
+5. Add your current IP address to the IP Whitelist and create a MongoDB user with a username and password.
+6. Choose "Connect your application".
+7. Copy the connection string and replace `<username>` and `<password>` with the MongoDB user you created in step 5.
+
+You will use this connection string in the `.env` file in the "Setup" section.
+
 ## Setup
+
 To use the Coffee Connoisseur API, follow these steps:
 
 1. Clone this repository to your local machine:
@@ -85,6 +104,7 @@ You should seed the following string in the console:
 `"Server running on http://localhost:9090"`
 
 ## Feedback and Support
+
 If you have any feedback or need support regarding the Coffee Connoisseur API, please create an issue on this repository.
 
 Thank you for using the Coffee Connoisseur API! ☕️

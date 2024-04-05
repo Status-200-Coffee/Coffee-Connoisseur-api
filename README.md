@@ -71,7 +71,7 @@ $ npm install
 
 ## Seeding the databases:
 
-Run the following scripts to setup and seed the MongoDB Atlas databases:
+Run the following scripts to seed the MongoDB Atlas databases:
 
 * To **seed** the development database:
 
@@ -100,7 +100,7 @@ Run the server locally using the following command and follow the link to http:/
 ```
 $ npm run start
 ```
-You should seed the following string in the console:
+You should see the following string in the console:
 `"Server running on http://localhost:9090"`
 
 ## Feedback and Support
